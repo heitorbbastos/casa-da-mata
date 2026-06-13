@@ -85,11 +85,11 @@
   <div class="card"><div class="t">Aporte/família</div><div class="v">R$ 2.000</div><div class="d">foi R$ 3.000 jan-fev</div></div>
 </div>
 
-<h2>📈 Evolução do caixa</h2>
+<h2>📈 Receitas × despesas por mês</h2>
 <div class="chartbox">
-  <div class="ct">Saldo mês a mês · barras = despesas do mês · <b>passe o mouse / toque nos pontos</b></div>
+  <div class="ct">Linhas = aportes e despesas · a <b>área entre elas = resultado do mês</b> · barras = rendimento · <b>toque nos pontos</b></div>
   <div id="g-evo"></div>
-  <div class="legend"><span><i style="background:#2e6b4f"></i>Saldo (linha)</span><span><i style="background:#b0413e;opacity:.6"></i>Despesas (barras)</span></div>
+  <div class="legend"><span><i style="background:#2e6b4f"></i>Receitas</span><span><i style="background:#b0413e"></i>Despesas</span><span><i style="background:#c8881f"></i>Rendimento</span></div>
 </div>
 
 <h2>📅 Tabela mês a mês <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque na linha p/ detalhar)</span></h2>
@@ -140,47 +140,56 @@ const dados = [
 const totAp = x => x.aportes.reduce((s,a)=>s+a.v,0);
 const totDs = x => x.despesas.reduce((s,a)=>s+a.v,0);
 
-// ---- Gráfico único: evolução (saldo) + despesas (barras) + tooltip ----
+// ---- Gráfico: linhas receita/despesa + área (resultado) + barras de rendimento + tooltip ----
 (function(){
   const box=document.getElementById('g-evo');
-  const W=320,H=190,pl=12,pr=12,pt=22,pb=22,baseH=46;
-  const lineTop=pt, lineBot=H-pb-baseH-10;
-  const sld=dados.map(d=>d.saldo), smn=Math.min(...sld)-1500, smx=Math.max(...sld)+1500;
-  const dmx=Math.max(...dados.map(totDs));
+  const W=320,H=210,pl=14,pr=14,pt=20,pb=34,rendBand=28;
+  const lineTop=pt, lineBot=H-pb-rendBand-8;
+  const R=dados.map(totAp), D=dados.map(totDs), RD=dados.map(d=>d.rd);
+  const vmax=Math.max(...R,...D)*1.08, rdmax=Math.max(...RD);
   const x=i=>pl+i*((W-pl-pr)/(dados.length-1));
-  const ys=v=>lineTop+(1-(v-smn)/(smx-smn))*(lineBot-lineTop);
-  let bars=dados.map((d,i)=>{const h=(totDs(d)/dmx)*baseH,bw=15;return `<rect x="${x(i)-bw/2}" y="${(H-pb)-h}" width="${bw}" height="${h}" rx="2" fill="#b0413e" opacity=".5"/>
-    <text x="${x(i)}" y="${(H-pb)-h-3}" font-size="6.5" fill="#b0413e" text-anchor="middle">${totDs(d)>=1000?fmt0(totDs(d)/1000)+'k':fmt0(totDs(d))}</text>`}).join('');
-  const area=`M ${x(0)},${lineBot} `+dados.map((d,i)=>`L ${x(i)},${ys(d.saldo)}`).join(' ')+` L ${x(dados.length-1)},${lineBot} Z`;
-  const line=dados.map((d,i)=>`${x(i)},${ys(d.saldo)}`).join(' ');
-  let dots=dados.map((d,i)=>`<circle cx="${x(i)}" cy="${ys(d.saldo)}" r="3.5" fill="#2e6b4f" stroke="#fff" stroke-width="1.2"/>
-    <text x="${x(i)}" y="${ys(d.saldo)-7}" font-size="7.5" fill="#2e6b4f" text-anchor="middle" font-weight="700">${fmt0(d.saldo/1000)}k</text>`).join('');
-  let labels=dados.map((d,i)=>`<text x="${x(i)}" y="${H-5}" font-size="8.5" fill="#7a766c" text-anchor="middle">${d.m}${d.atual?' •':''}</text>`).join('');
+  const yv=v=>lineTop+(1-v/vmax)*(lineBot-lineTop);
+  // área bicolor entre as duas linhas (verde: receita>despesa · vermelho: despesa>receita)
+  let green='',red='';
+  for(let i=0;i<dados.length-1;i++){
+    const x0=x(i),x1=x(i+1),r0=yv(R[i]),r1=yv(R[i+1]),d0=yv(D[i]),d1=yv(D[i+1]),f0=R[i]-D[i],f1=R[i+1]-D[i+1];
+    if(f0>=0&&f1>=0) green+=`M${x0},${r0} L${x1},${r1} L${x1},${d1} L${x0},${d0}Z `;
+    else if(f0<0&&f1<0) red+=`M${x0},${r0} L${x1},${r1} L${x1},${d1} L${x0},${d0}Z `;
+    else{const t=f0/(f0-f1),xc=x0+t*(x1-x0),yc=r0+t*(r1-r0);
+      if(f0>=0){green+=`M${x0},${r0} L${xc},${yc} L${x0},${d0}Z `; red+=`M${xc},${yc} L${x1},${r1} L${x1},${d1}Z `;}
+      else{red+=`M${x0},${r0} L${xc},${yc} L${x0},${d0}Z `; green+=`M${xc},${yc} L${x1},${r1} L${x1},${d1}Z `;}}
+  }
+  const lineR=dados.map((d,i)=>`${x(i)},${yv(R[i])}`).join(' ');
+  const lineD=dados.map((d,i)=>`${x(i)},${yv(D[i])}`).join(' ');
+  const yr0=H-pb;
+  let rend=dados.map((d,i)=>{const h=Math.max(2,(RD[i]/rdmax)*rendBand),bw=13;return `<rect x="${x(i)-bw/2}" y="${yr0-h}" width="${bw}" height="${h}" rx="2" fill="#c8881f" opacity=".8"/>
+    <text x="${x(i)}" y="${yr0-h-2}" font-size="6" fill="#c8881f" text-anchor="middle">${fmt0(RD[i])}</text>`}).join('');
+  let dots=dados.map((d,i)=>`<circle cx="${x(i)}" cy="${yv(R[i])}" r="3" fill="#2e6b4f" stroke="#fff" stroke-width="1"/><circle cx="${x(i)}" cy="${yv(D[i])}" r="3" fill="#b0413e" stroke="#fff" stroke-width="1"/>`).join('');
+  let labels=dados.map((d,i)=>`<text x="${x(i)}" y="${H-19}" font-size="8" fill="#7a766c" text-anchor="middle">${d.m}${d.atual?' •':''}</text>`).join('');
   const colW=(W-pl-pr)/dados.length;
   let hits=dados.map((d,i)=>`<rect class="hit" x="${x(i)-colW/2}" y="0" width="${colW}" height="${H}" fill="transparent" data-i="${i}"/>`).join('');
   box.innerHTML=`<svg viewBox="0 0 ${W} ${H}">
-    <defs><linearGradient id="gv" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3f8b66" stop-opacity=".25"/><stop offset="1" stop-color="#3f8b66" stop-opacity="0"/></linearGradient></defs>
-    ${bars}<path d="${area}" fill="url(#gv)"/><polyline points="${line}" fill="none" stroke="#2e6b4f" stroke-width="2"/>${dots}${labels}${hits}
+    <path d="${green}" fill="#3f8b66" opacity=".18"/><path d="${red}" fill="#b0413e" opacity=".18"/>
+    <polyline points="${lineR}" fill="none" stroke="#2e6b4f" stroke-width="2"/>
+    <polyline points="${lineD}" fill="none" stroke="#b0413e" stroke-width="2"/>${dots}
+    <line x1="${pl}" y1="${yr0}" x2="${W-pr}" y2="${yr0}" stroke="#e6e2d8"/>
+    <text x="${pl}" y="${yr0+9}" font-size="7" fill="#c8881f">✦ rendimento (R$)</text>${rend}${labels}${hits}
   </svg><div class="tip" id="tip" hidden></div>`;
   const tip=document.getElementById('tip');
-  function show(i){const d=dados[i];
-    const ap=d.aportes.some(a=>a.st==='pend')?` <span class="y">(falta ${d.aportes.filter(a=>a.st==='pend').map(a=>a.f).join(', ')})</span>`:'';
+  function show(i){const d=dados[i],res=totAp(d)-totDs(d);
+    const pend=d.aportes.some(a=>a.st==='pend')?` <span class="y">(falta ${d.aportes.filter(a=>a.st==='pend').map(a=>a.f).join(', ')})</span>`:'';
     tip.innerHTML=`<b>${d.mes}${d.atual?' · em curso':''}</b><br>
-      Saldo: <b>R$ ${fmt(d.saldo)}</b><br>
-      <span class="g">▲ Aportes: R$ ${fmt0(totAp(d))}</span>${ap}<br>
+      <span class="g">▲ Receitas: R$ ${fmt0(totAp(d))}</span>${pend}<br>
       <span class="r">▼ Despesas: R$ ${fmt(totDs(d))}</span><br>
-      <span class="y">✦ Rendimento: +R$ ${fmt(d.rd)}</span>`;
+      Resultado do mês: <b>${res>=0?'+':'−'}R$ ${fmt(Math.abs(res))}</b><br>
+      <span class="y">✦ Rendimento: +R$ ${fmt(d.rd)}</span><br>
+      Saldo do caixa: <b>R$ ${fmt(d.saldo)}</b>`;
     tip.hidden=false;
     const rect=box.getBoundingClientRect(), px=(x(i)/W)*rect.width;
-    tip.style.left=Math.min(Math.max(px-62,2),rect.width-132)+'px';
-    tip.style.top='4px';
+    tip.style.left=Math.min(Math.max(px-66,2),rect.width-142)+'px'; tip.style.top='4px';
   }
-  box.querySelectorAll('.hit').forEach(r=>{
-    const i=+r.dataset.i;
-    r.addEventListener('mouseenter',()=>show(i));
-    r.addEventListener('click',()=>show(i));
-    r.addEventListener('mouseleave',()=>tip.hidden=true);
-  });
+  box.querySelectorAll('.hit').forEach(r=>{const i=+r.dataset.i;
+    r.addEventListener('mouseenter',()=>show(i)); r.addEventListener('click',()=>show(i)); r.addEventListener('mouseleave',()=>tip.hidden=true);});
 })();
 
 // ---- Tabela expansível ----
