@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Casa da Mata — Prestação de Contas</title>
+<style>
+  :root{--verde:#2e6b4f;--verde2:#3f8b66;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#b0413e;--laranja:#c8881f;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;padding:16px;max-width:860px;margin:0 auto}
+  header{text-align:center;padding:18px 0 8px}
+  header h1{font-size:1.5rem;color:var(--verde);letter-spacing:.3px}
+  header .sub{color:var(--mut);font-size:.85rem;margin-top:4px}
+  .caixa-hoje{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;border-radius:16px;padding:22px;text-align:center;margin:16px 0;box-shadow:0 4px 14px rgba(46,107,79,.25)}
+  .caixa-hoje .label{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+  .caixa-hoje .valor{font-size:2.4rem;font-weight:700;margin:4px 0}
+  .caixa-hoje .obs{font-size:.8rem;opacity:.9}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+  .card{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px}
+  .card .t{font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+  .card .v{font-size:1.25rem;font-weight:650;margin-top:3px}
+  .card .d{font-size:.75rem;color:var(--mut);margin-top:2px}
+  .card.rend .v{color:var(--verde2)}
+  h2{font-size:1.05rem;color:var(--verde);margin:22px 0 8px;border-bottom:2px solid var(--linha);padding-bottom:4px}
+  /* meses expansíveis */
+  details.mes{background:var(--card);border:1px solid var(--linha);border-radius:12px;margin:8px 0;overflow:hidden}
+  details.mes>summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;align-items:center;gap:10px}
+  details.mes>summary::-webkit-details-marker{display:none}
+  summary .chev{color:var(--mut);transition:transform .2s;font-size:.8rem}
+  details[open] summary .chev{transform:rotate(90deg)}
+  summary .mnome{font-weight:650;flex:1}
+  summary .msaldo{font-weight:650;color:var(--verde)}
+  summary .mrend{font-size:.72rem;color:var(--verde2);margin-left:6px}
+  .det{padding:4px 16px 14px;border-top:1px dashed var(--linha)}
+  .det .sub{font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 5px}
+  .linha{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:.86rem;border-bottom:1px solid #f1efe8}
+  .linha:last-child{border-bottom:none}
+  .linha .desc{color:var(--txt)} .linha .vd{white-space:nowrap;color:var(--vermelho)}
+  .linha .va{white-space:nowrap;color:var(--verde2)}
+  .st{font-size:.7rem;padding:1px 7px;border-radius:8px;margin-left:6px;vertical-align:middle}
+  .st.ok{background:#e3f0e8;color:var(--verde)} .st.pend{background:#f0ece2;color:var(--mut)} .st.par{background:#faf0db;color:var(--laranja)}
+  .obsmin{font-size:.72rem;color:var(--mut);font-style:italic}
+  .tot{display:flex;justify-content:space-between;font-weight:650;font-size:.85rem;padding-top:7px;margin-top:4px;border-top:2px solid var(--linha)}
+  .leg{font-size:.75rem;color:var(--mut);margin-top:8px}
+  .nota{background:#fff8e8;border:1px solid #e8dcb0;border-radius:10px;padding:12px 14px;font-size:.82rem;color:#6b5d2f;margin:14px 0}
+  .nota b{color:var(--terra)}
+  .cat{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .cat .bar{height:14px;border-radius:4px;background:var(--verde2)}
+  .cat .nm{flex:0 0 110px;font-size:.82rem}
+  .cat .vl{font-size:.8rem;color:var(--mut);white-space:nowrap}
+  footer{text-align:center;color:var(--mut);font-size:.75rem;margin:24px 0 8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌳 Casa da Mata</h1>
+  <div class="sub">Prestação de contas · Condomínio Amazonflora (Benevides/PA) · Lotes Cumaru 05 e 07</div>
+</header>
+
+<div class="caixa-hoje">
+  <div class="label">Caixa real hoje</div>
+  <div class="valor">R$ 64.545,00</div>
+  <div class="obs">conta (fim de maio) + fundo (13/06) · junho em andamento — fecha com o extrato do mês</div>
+</div>
+
+<div class="cards">
+  <div class="card"><div class="t">Conta Caixa</div><div class="v">R$ 7.618,61</div><div class="d">saldo em conta</div></div>
+  <div class="card"><div class="t">Fundo (renda fixa)</div><div class="v">R$ 56.926,39</div><div class="d">aplicado, rendendo</div></div>
+  <div class="card rend"><div class="t">Rendimentos</div><div class="v">+ R$ 2.834,68</div><div class="d">desde jan/2026</div></div>
+  <div class="card"><div class="t">Aporte mensal</div><div class="v">R$ 2.000</div><div class="d">por família · foi R$ 3.000 em jan-fev</div></div>
+</div>
+
+<h2>📅 Mês a mês — 2026 <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque para abrir)</span></h2>
+<div id="meses"></div>
+<div class="leg">Saldo final = foto real do banco (conta + fundo). Rendimento estimado (~0,95%/mês) até o app da Caixa detalhar o exato. Itens com <b>*</b> em conciliação final.</div>
+
+<div class="nota">
+  <b>Correção de contabilidade (jun/2026):</b> uma revisão cruzando os resumos com os extratos do banco
+  encontrou um erro de registro a partir de março — o saldo foi reaberto em R$ 73.840,91 quando o mês
+  havia fechado em R$ 61.686,80 (salto de ~R$ 12 mil que se repetiu nos resumos seguintes).
+  <b>Nenhum centavo foi perdido</b> — o dinheiro sempre esteve no banco; corrigiu-se apenas o número.
+</div>
+
+<h2>🏗️ Para onde o dinheiro foi (desde 2022)</h2>
+<div id="cats"></div>
+<div class="leg">Total investido no projeto até hoje: <b>R$ 200.113,93</b>.</div>
+
+<footer>
+  Assistente Casa da Mata · fonte: extratos Caixa (conta + fundo) e histórico do projeto.<br>
+  Página privada — não indexada. Sem dados bancários pessoais.
+</footer>
+
+<script>
+const fmt = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const F = ({id:'heitor',n:'Heitor/Wanessa'}); // só p/ referência
+// status: 'ok' | 'pend' | 'par'
+const dados = [
+ {m:'Janeiro', saldo:53245.67, rend:405.46, alvo:3000,
+   aportes:[
+     {fam:'Heitor/Wanessa', v:3000, st:'ok', obs:'pagamentos por fora + complemento Pix R$561,20'},
+     {fam:'Gilberto/Priscila', v:3000, st:'ok', obs:'Pix 08/01'},
+     {fam:'Zé/Luiza', v:3000, st:'ok', obs:'Pix 12/01'},
+   ],
+   despesas:[
+     {d:'Sondagem geotécnica (Sodré)', v:2600.00, obs:'pago 20 e 27/01'},
+     {d:'Condomínio Cumaru 05+07', v:833.52, obs:'416,76 ×2 *'},
+   ]},
+ {m:'Fevereiro', saldo:61359.88, rend:569.38, alvo:3000,
+   aportes:[
+     {fam:'Heitor/Wanessa', v:3000, st:'ok', obs:''},
+     {fam:'1 família', v:3000, st:'ok', obs:'Pix 09/02 — remetente a confirmar'},
+     {fam:'Gilberto/Priscila', v:0, st:'pend', obs:'avisou em 20/02 que não pagaria fev *'},
+   ],
+   despesas:[
+     {d:'Condomínio Cumaru 05+07', v:833.52, obs:'416,76 ×2'},
+   ]},
+ {m:'Março', saldo:65970.86, rend:607.44, alvo:2000,
+   aportes:[
+     {fam:'3 famílias', v:6000, st:'ok', obs:'R$ 2.000 cada (voltou de R$ 3.000)'},
+   ],
+   despesas:[
+     {d:'Condomínio Cumaru 05+07', v:833.52, obs:'416,76 ×2'},
+   ]},
+ {m:'Abril', saldo:58693.84, rend:514.68, alvo:2000,
+   aportes:[
+     {fam:'Heitor/Wanessa', v:2000, st:'ok', obs:'condomínio 890,10 + complemento 1.109,90'},
+     {fam:'Gilberto/Priscila', v:2000, st:'ok', obs:''},
+     {fam:'Zé/Luiza', v:2000, st:'ok', obs:''},
+   ],
+   despesas:[
+     {d:'Projeto Hidráulico/estrutural', v:14040.00, obs:'pago 06/04'},
+     {d:'Condomínio Cumaru 05+07', v:890.10, obs:'445,05 ×2'},
+   ]},
+ {m:'Maio', saldo:64321.97, rend:514.68, alvo:2000,
+   aportes:[
+     {fam:'3 famílias', v:6000, st:'ok', obs:'R$ 2.000 cada'},
+   ],
+   despesas:[
+     {d:'Condomínio Cumaru 05+07', v:890.10, obs:'445,05 ×2'},
+   ]},
+ {m:'Junho', saldo:64545.00, rend:223.03, alvo:2000, atual:true,
+   aportes:[
+     {fam:'Gilberto/Priscila', v:2000, st:'ok', obs:'Pix BBSH (Priscila enviou dela + Gilberto)'},
+     {fam:'Zé/Luiza', v:0, st:'pend', obs:'aguardando'},
+     {fam:'Heitor/Wanessa', v:2000, st:'ok', obs:'condomínio R$1.124,34 (Bradesco) + complemento R$875,66 (Pix 13/06) ✓'},
+   ],
+   despesas:[
+     {d:'Condomínio Cumaru 05+07', v:1124.34, obs:'562,17 ×2 — pago via Bradesco'},
+   ]},
+];
+const stTxt={ok:'pago',pend:'pendente',par:'parcial'};
+const box=document.getElementById('meses');
+dados.slice().reverse().forEach(x=>{
+  const ap = x.aportes.reduce((s,a)=>s+a.v,0);
+  const ds = x.despesas.reduce((s,d)=>s+d.v,0);
+  let ah=''; x.aportes.forEach(a=>{
+    ah+=`<div class="linha"><span class="desc">${a.fam}<span class="st ${a.st}">${stTxt[a.st]}</span>${a.obs?`<br><span class="obsmin">${a.obs}</span>`:''}</span><span class="va">R$ ${fmt(a.v)}</span></div>`;
+  });
+  let dh=''; x.despesas.forEach(d=>{
+    dh+=`<div class="linha"><span class="desc">${d.d}${d.obs?`<br><span class="obsmin">${d.obs}</span>`:''}</span><span class="vd">R$ ${fmt(d.v)}</span></div>`;
+  });
+  box.innerHTML += `<details class="mes"${x.atual?' open':''}>
+    <summary><span class="chev">▶</span><span class="mnome">${x.m}${x.atual?' · em curso':''}</span>
+      <span class="msaldo">${x.atual?'em curso':'R$ '+fmt(x.saldo)}</span><span class="mrend">+${fmt(x.rend)} rend.</span></summary>
+    <div class="det">
+      <div class="sub">Aportes (meta R$ ${fmt(x.alvo)}/família)</div>${ah}
+      <div class="tot"><span>Total aportes</span><span class="va">R$ ${fmt(ap)}</span></div>
+      <div class="sub">Despesas</div>${dh}
+      <div class="tot"><span>Total despesas</span><span class="vd">R$ ${fmt(ds)}</span></div>
+    </div>
+  </details>`;
+});
+
+const cats=[{nm:'Terreno',v:120000},{nm:'Condomínio',v:42595.14},{nm:'Projeto',v:28600},{nm:'Documentação',v:6018.79},{nm:'Limpeza',v:2900}];
+const max=Math.max(...cats.map(c=>c.v)); const cd=document.getElementById('cats');
+cats.forEach(c=>{const w=Math.max(6,(c.v/max)*100);
+  cd.innerHTML+=`<div class="cat"><div class="nm">${c.nm}</div><div class="bar" style="width:${w}%"></div><div class="vl">R$ ${fmt(c.v)}</div></div>`;});
+</script>
+</body>
+</html>
