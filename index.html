@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Casa da Mata — Prestação de Contas</title>
 <style>
-  :root{--verde:#2e6b4f;--verde2:#3f8b66;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#b0413e;--laranja:#c8881f;}
+  :root{--verde:#2e6b4f;--verde2:#3f8b66;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#c25450;--laranja:#c8881f;}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;padding:16px;max-width:880px;margin:0 auto}
   header{text-align:center;padding:18px 0 8px}
@@ -23,40 +23,48 @@
   .card .d{font-size:.74rem;color:var(--mut);margin-top:2px}
   .card.rend .v{color:var(--verde2)}
   h2{font-size:1.05rem;color:var(--verde);margin:24px 0 8px;border-bottom:2px solid var(--linha);padding-bottom:4px}
-  .chartbox{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px 12px 8px;position:relative}
-  .chartbox .ct{font-size:.8rem;color:var(--mut);margin-bottom:6px}
-  svg{width:100%;height:auto;display:block;overflow:visible}
-  .hit{cursor:pointer}
-  .tip{position:absolute;background:#262523;color:#fff;font-size:.72rem;padding:8px 10px;border-radius:8px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9;line-height:1.5;min-width:124px}
+  .chartbox{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px 4px 8px;position:relative}
+  .chartbox .ct{font-size:.78rem;color:var(--mut);margin:0 10px 6px}
+  .scrollwrap{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+  .scrollwrap svg{display:block}
+  .tip{position:absolute;top:34px;left:12px;background:#262523;color:#fff;font-size:.72rem;padding:8px 10px;border-radius:8px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9;line-height:1.5;min-width:130px}
   .tip b{color:#fff;font-size:.78rem}
   .tip .g{color:#8fd3ad} .tip .r{color:#eaa6a3} .tip .y{color:#e7c878}
   .legend{display:flex;gap:14px;justify-content:center;font-size:.72rem;color:var(--mut);margin-top:8px}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
-  table{width:100%;border-collapse:collapse;font-size:.82rem;background:var(--card);border-radius:10px;overflow:hidden}
-  th,td{padding:8px 7px;text-align:right;border-bottom:1px solid var(--linha)}
+  .hint{text-align:center;font-size:.68rem;color:var(--mut);margin-top:3px}
+  /* anos */
+  details.ano{background:var(--card);border:1px solid var(--linha);border-radius:12px;margin:8px 0;overflow:hidden}
+  details.ano>summary{list-style:none;cursor:pointer;padding:12px 15px;display:flex;align-items:center;gap:10px;font-weight:650}
+  details.ano>summary::-webkit-details-marker{display:none}
+  summary .chev{color:var(--mut);font-size:.72rem;transition:transform .2s}
+  details[open]>summary .chev{transform:rotate(90deg)}
+  summary .yr{font-size:1rem;color:var(--verde);flex:0 0 auto}
+  summary .yinfo{flex:1;text-align:right;font-size:.74rem;font-weight:400;color:var(--mut)}
+  summary .yinfo b{color:var(--verde);font-weight:650}
+  table{width:100%;border-collapse:collapse;font-size:.82rem}
+  th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--linha)}
   th:first-child,td:first-child{text-align:left}
-  thead th{background:#eef0ea;color:var(--verde);font-size:.68rem;text-transform:uppercase;letter-spacing:.3px}
+  thead th{background:#eef0ea;color:var(--verde);font-size:.66rem;text-transform:uppercase;letter-spacing:.3px}
   tr.mes{cursor:pointer}
   tr.mes:hover{background:#f7f8f4}
-  tr.mes .chev{color:var(--mut);font-size:.7rem;display:inline-block;width:12px;transition:transform .2s}
-  tr.mes.open .chev{transform:rotate(90deg)}
+  tr.mes .chev{display:inline-block;width:11px}
   td.sld{font-weight:650;color:var(--verde)}
   .pos{color:var(--verde2)} .neg{color:var(--vermelho)}
   tr.det>td{background:#fbfaf6;padding:0}
-  .detinner{padding:10px 14px 14px}
+  .detinner{padding:8px 14px 12px}
   .comp{display:flex;gap:8px;margin:2px 0 10px}
-  .comp .b{flex:1;background:#eef0ea;border-radius:8px;padding:7px 9px;font-size:.78rem}
-  .comp .b b{display:block;font-size:.95rem;color:var(--verde)}
-  /* títulos de seção do detalhe — em DESTAQUE */
-  .sechead{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 4px;padding-bottom:3px;border-bottom:2px solid var(--linha)}
-  .sechead .tt{font-size:.86rem;font-weight:700;color:var(--verde)}
-  .sechead .vv{font-size:.86rem;font-weight:700}
-  .ln{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:.82rem;color:var(--txt);border-bottom:1px solid #f1efe8}
+  .comp .b{flex:1;background:#eef0ea;border-radius:8px;padding:6px 9px;font-size:.76rem}
+  .comp .b b{display:block;font-size:.92rem;color:var(--verde)}
+  .sechead{display:flex;justify-content:space-between;align-items:baseline;margin:12px 0 3px;padding-bottom:3px;border-bottom:2px solid var(--linha)}
+  .sechead .tt{font-size:.84rem;font-weight:700;color:var(--verde)}
+  .sechead .vv{font-size:.84rem;font-weight:700}
+  .ln{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:.81rem;border-bottom:1px solid #f1efe8}
   .ln:last-child{border-bottom:none}
-  .obsmin{font-size:.72rem;color:var(--mut);font-style:italic}
-  .st{font-size:.68rem;padding:1px 6px;border-radius:8px;margin-left:5px}
+  .obsmin{font-size:.71rem;color:var(--mut);font-style:italic}
+  .st{font-size:.67rem;padding:1px 6px;border-radius:8px;margin-left:5px}
   .st.ok{background:#e3f0e8;color:var(--verde)} .st.pend{background:#f0ece2;color:var(--mut)} .st.par{background:#faf0db;color:var(--laranja)}
-  .leg{font-size:.74rem;color:var(--mut);margin-top:8px}
+  .leg{font-size:.74rem;color:var(--mut);margin:8px 2px}
   .nota{background:#fff8e8;border:1px solid #e8dcb0;border-radius:10px;padding:12px 14px;font-size:.82rem;color:#6b5d2f;margin:14px 0}
   .nota b{color:var(--terra)}
   .cat{display:flex;align-items:center;gap:8px;margin:6px 0}
@@ -69,7 +77,7 @@
 <body>
 <header>
   <h1>🌳 Casa da Mata</h1>
-  <div class="sub">Prestação de contas · Condomínio Amazonflora (Benevides/PA) · Lotes Cumaru 05 e 07</div>
+  <div class="sub">Prestação de contas · Condomínio Amazonflora (Benevides/PA) · Lotes Cumaru 05 e 07 · desde 2022</div>
 </header>
 
 <div class="caixa-hoje">
@@ -82,26 +90,25 @@
   <div class="card"><div class="t">Em conta (Caixa)</div><div class="v">R$ 10.494,27</div><div class="d">após aportes de junho</div></div>
   <div class="card"><div class="t">Investido (fundo)</div><div class="v">R$ 56.926,39</div><div class="d">renda fixa</div></div>
   <div class="card rend"><div class="t">Rendimentos</div><div class="v">+ R$ 2.834,68</div><div class="d">desde jan/26</div></div>
-  <div class="card"><div class="t">Aporte/família</div><div class="v">R$ 2.000</div><div class="d">foi R$ 3.000 jan-fev</div></div>
+  <div class="card"><div class="t">Aporte/família</div><div class="v">R$ 2.000</div><div class="d">foi R$ 3.000 jan-fev/26</div></div>
 </div>
 
-<h2>📈 Receitas × despesas por mês</h2>
+<h2>📈 Receitas × despesas — projeto inteiro</h2>
 <div class="chartbox">
-  <div class="ct">Linhas = aportes e despesas · a <b>área entre elas = resultado do mês</b> · barras = rendimento · <b>toque nos pontos</b></div>
-  <div id="g-evo"></div>
-  <div class="legend"><span><i style="background:#2e6b4f"></i>Receitas</span><span><i style="background:#b0413e"></i>Despesas</span><span><i style="background:#c8881f"></i>Rendimento</span></div>
+  <div class="ct">Linhas = aportes e despesas · barras = rendimento · <b>role para a esquerda</b> p/ anos anteriores · toque nos pontos</div>
+  <div class="scrollwrap" id="scrollwrap"><div id="g-evo"></div></div>
+  <div class="tip" id="tip" hidden></div>
+  <div class="legend"><span><i style="background:#2e6b4f"></i>Receitas</span><span><i style="background:#c25450"></i>Despesas</span><span><i style="background:#cdab57"></i>Rendimento</span></div>
+  <div class="hint">← jun/2022 (terreno) ……………… jun/2026 →</div>
 </div>
 
-<h2>📅 Tabela mês a mês <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque na linha p/ detalhar)</span></h2>
-<table>
-  <thead><tr><th>Mês</th><th>Aportes</th><th>Despesas</th><th>Rend.</th><th>Saldo</th></tr></thead>
-  <tbody id="tbody"></tbody>
-</table>
-<div class="leg">Saldo = foto real do banco (conta + fundo). Rendimento estimado (~0,95%/mês) até o app da Caixa detalhar. Itens com <b>*</b> em conciliação.</div>
+<h2>📅 Mês a mês — por ano <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque no ano / na linha)</span></h2>
+<div id="anos"></div>
+<div class="leg">2026 = saldo real do banco (conta + fundo, auditado). 2022–2025 = registros do projeto. Até fev/2025 o regime era de <b>reembolso</b> (receita = despesa, caixa ~zero); de mar/2025 virou aporte fixo e o caixa passou a crescer.</div>
 
 <div class="nota">
   <b>Correção (jun/2026):</b> revisão cruzando os resumos com os extratos achou um erro de registro a partir
-  de março — o saldo foi reaberto em R$ 73.840,91 quando o mês fechou em R$ 61.686,80 (~R$ 12 mil que se
+  de março/26 — o saldo foi reaberto em R$ 73.840,91 quando o mês fechou em R$ 61.686,80 (~R$ 12 mil que se
   repetiram nos meses seguintes). <b>Nenhum centavo sumiu</b> — o dinheiro sempre esteve no banco; corrigiu-se o número.
 </div>
 
@@ -110,119 +117,134 @@
 <div class="leg">Total investido no projeto até hoje: <b>R$ 200.113,93</b>.</div>
 
 <footer>
-  Assistente Casa da Mata · fonte: extratos Caixa (conta + fundo) e histórico do projeto.<br>
+  Assistente Casa da Mata · fonte: extratos Caixa (conta + fundo) e histórico das transações.<br>
   Página privada — não indexada. Sem dados bancários pessoais.
 </footer>
 
 <script>
-const fmt = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmt0 = v => Math.round(v).toLocaleString('pt-BR');
-const dados = [
- {m:'Jan', mes:'Janeiro', alvo:3000, rd:405.46, fundo:53245.67, conta:0, saldo:53245.67,
+const fmt=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt0=v=>Math.round(v).toLocaleString('pt-BR');
+const MNUM={Jan:1,Fev:2,Mar:3,Abr:4,Mai:5,Jun:6,Jul:7,Ago:8,Set:9,Out:10,Nov:11,Dez:12};
+// 2026 detalhado (saldo real auditado do banco)
+const d2026=[
+ {m:'Jan',ano:2026,mes:'Janeiro/2026',alvo:3000,rd:405.46,fundo:53245.67,conta:0,saldo:53245.67,
    aportes:[{f:'Heitor/Wanessa',v:3000,st:'ok',o:'pagto por fora + complemento Pix 561,20'},{f:'Gilberto/Priscila',v:3000,st:'ok',o:'Pix 08/01'},{f:'Zé/Luiza',v:3000,st:'ok',o:'Pix 12/01'}],
    despesas:[{d:'Sondagem geotécnica (Sodré)',v:2600,o:'20 e 27/01'},{d:'Condomínio Cumaru 05+07',v:833.52,o:'416,76 ×2 *'}]},
- {m:'Fev', mes:'Fevereiro', alvo:3000, rd:569.38, fundo:60815.05, conta:544.83, saldo:61359.88,
+ {m:'Fev',ano:2026,mes:'Fevereiro/2026',alvo:3000,rd:569.38,fundo:60815.05,conta:544.83,saldo:61359.88,
    aportes:[{f:'Heitor/Wanessa',v:3000,st:'ok',o:''},{f:'1 família',v:3000,st:'ok',o:'Pix 09/02 — remetente a confirmar'},{f:'Gilberto/Priscila',v:0,st:'pend',o:'avisou em 20/02 que não pagaria fev *'}],
    despesas:[{d:'Condomínio Cumaru 05+07',v:833.52,o:'416,76 ×2'}]},
- {m:'Mar', mes:'Março', alvo:2000, rd:607.44, fundo:65422.49, conta:548.37, saldo:65970.86,
+ {m:'Mar',ano:2026,mes:'Março/2026',alvo:2000,rd:607.44,fundo:65422.49,conta:548.37,saldo:65970.86,
    aportes:[{f:'3 famílias',v:6000,st:'ok',o:'R$ 2.000 cada (voltou de R$ 3.000)'}],
    despesas:[{d:'Condomínio Cumaru 05+07',v:833.52,o:'416,76 ×2'}]},
- {m:'Abr', mes:'Abril', alvo:2000, rd:514.68, fundo:56188.68, conta:2505.16, saldo:58693.84,
+ {m:'Abr',ano:2026,mes:'Abril/2026',alvo:2000,rd:514.68,fundo:56188.68,conta:2505.16,saldo:58693.84,
    aportes:[{f:'Heitor/Wanessa',v:2000,st:'ok',o:'condomínio 890,10 + complemento 1.109,90'},{f:'Gilberto/Priscila',v:2000,st:'ok',o:''},{f:'Zé/Luiza',v:2000,st:'ok',o:''}],
    despesas:[{d:'Projeto Hidráulico/estrutural',v:14040,o:'pago 06/04'},{d:'Condomínio Cumaru 05+07',v:890.10,o:'445,05 ×2'}]},
- {m:'Mai', mes:'Maio', alvo:2000, rd:514.68, fundo:56703.36, conta:7618.61, saldo:64321.97,
+ {m:'Mai',ano:2026,mes:'Maio/2026',alvo:2000,rd:514.68,fundo:56703.36,conta:7618.61,saldo:64321.97,
    aportes:[{f:'3 famílias',v:6000,st:'ok',o:'R$ 2.000 cada'}],
    despesas:[{d:'Condomínio Cumaru 05+07',v:890.10,o:'445,05 ×2'}]},
- {m:'Jun', mes:'Junho', alvo:2000, rd:223.03, fundo:56926.39, conta:10494.27, saldo:67420.66, atual:true,
+ {m:'Jun',ano:2026,mes:'Junho/2026',alvo:2000,rd:223.03,fundo:56926.39,conta:10494.27,saldo:67420.66,atual:true,
    aportes:[{f:'Gilberto/Priscila',v:2000,st:'ok',o:'Pix BBSH (Priscila enviou dela + Gilberto)'},{f:'Heitor/Wanessa',v:2000,st:'ok',o:'condomínio 1.124,34 (Bradesco) + complemento 875,66 (Pix 13/06)'},{f:'Zé/Luiza',v:0,st:'pend',o:'aguardando'}],
    despesas:[{d:'Condomínio Cumaru 05+07',v:1124.34,o:'562,17 ×2 — pago via Bradesco'}]},
 ];
-const totAp = x => x.aportes.reduce((s,a)=>s+a.v,0);
-const totDs = x => x.despesas.reduce((s,a)=>s+a.v,0);
+const hist=[{"m": "Jun", "ano": 2022, "mes": "Junho/2022", "rec": 126018.78, "desp": 126018.79, "sal": -0.01, "rd": 0, "dl": [["Terreno", 120000.0], ["Documentação", 6018.79]], "obs": "compra do terreno (2 lotes)"}, {"m": "Jul", "ano": 2022, "mes": "Julho/2022", "rec": 699.99, "desp": 700.0, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 700.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Ago", "ano": 2022, "mes": "Agosto/2022", "rec": 700.02, "desp": 700.02, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 700.02]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Set", "ano": 2022, "mes": "Setembro/2022", "rec": 1091.94, "desp": 1091.94, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 1091.94]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Out", "ano": 2022, "mes": "Outubro/2022", "rec": 1040.01, "desp": 1040.0, "sal": -0.01, "rd": 0, "dl": [["Condomínio", 1040.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Nov", "ano": 2022, "mes": "Novembro/2022", "rec": 840.03, "desp": 840.02, "sal": -0.0, "rd": 0, "dl": [["Condomínio", 840.02]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Dez", "ano": 2022, "mes": "Dezembro/2022", "rec": 700.02, "desp": 700.02, "sal": -0.0, "rd": 0, "dl": [["Condomínio", 700.02]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jan", "ano": 2023, "mes": "Janeiro/2023", "rec": 900.0, "desp": 900.0, "sal": -0.0, "rd": 0, "dl": [["Condomínio", 900.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Fev", "ano": 2023, "mes": "Fevereiro/2023", "rec": 1400.01, "desp": 1400.02, "sal": -0.01, "rd": 0, "dl": [["Condomínio", 700.02], ["Limpeza do terreno", 700.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Mar", "ano": 2023, "mes": "Março/2023", "rec": 746.67, "desp": 746.68, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 746.68]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Abr", "ano": 2023, "mes": "Abril/2023", "rec": 759.84, "desp": 759.84, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 759.84]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Mai", "ano": 2023, "mes": "Maio/2023", "rec": 900.0, "desp": 900.0, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 900.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jun", "ano": 2023, "mes": "Junho/2023", "rec": 900.0, "desp": 900.0, "sal": -0.02, "rd": 0, "dl": [["Condomínio", 900.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jul", "ano": 2023, "mes": "Julho/2023", "rec": 759.99, "desp": 760.0, "sal": -0.03, "rd": 0, "dl": [["Condomínio", 760.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Ago", "ano": 2023, "mes": "Agosto/2023", "rec": 855.99, "desp": 856.0, "sal": -0.04, "rd": 0, "dl": [["Condomínio", 856.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Set", "ano": 2023, "mes": "Setembro/2023", "rec": 855.99, "desp": 856.0, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 856.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Out", "ano": 2023, "mes": "Outubro/2023", "rec": 855.99, "desp": 856.0, "sal": -0.06, "rd": 0, "dl": [["Condomínio", 856.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Nov", "ano": 2023, "mes": "Novembro/2023", "rec": 855.99, "desp": 856.0, "sal": -0.07, "rd": 0, "dl": [["Condomínio", 856.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Dez", "ano": 2023, "mes": "Dezembro/2023", "rec": 1556.01, "desp": 1556.0, "sal": -0.06, "rd": 0, "dl": [["Condomínio", 856.0], ["Limpeza do terreno", 700.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jan", "ano": 2024, "mes": "Janeiro/2024", "rec": 1712.01, "desp": 1712.0, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 1712.0]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Mar", "ano": 2024, "mes": "Março/2024", "rec": 904.8, "desp": 904.8, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 904.8]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Abr", "ano": 2024, "mes": "Abril/2024", "rec": 895.56, "desp": 895.56, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 895.56]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Mai", "ano": 2024, "mes": "Maio/2024", "rec": 895.56, "desp": 895.56, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 895.56]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jun", "ano": 2024, "mes": "Junho/2024", "rec": 895.56, "desp": 895.56, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 895.56]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jul", "ano": 2024, "mes": "Julho/2024", "rec": 1104.81, "desp": 1104.8, "sal": -0.04, "rd": 0, "dl": [["Condomínio", 1104.8]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Ago", "ano": 2024, "mes": "Agosto/2024", "rec": 1000.17, "desp": 1000.18, "sal": -0.05, "rd": 0, "dl": [["Condomínio", 1000.18]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Set", "ano": 2024, "mes": "Setembro/2024", "rec": 7695.12, "desp": 7695.12, "sal": -0.05, "rd": 0, "dl": [["Projeto", 6900.0], ["Condomínio", 795.12]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Out", "ano": 2024, "mes": "Outubro/2024", "rec": 7695.12, "desp": 7695.12, "sal": -0.05, "rd": 0, "dl": [["Projeto", 6900.0], ["Condomínio", 795.12]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Nov", "ano": 2024, "mes": "Novembro/2024", "rec": 7695.12, "desp": 7695.12, "sal": -0.05, "rd": 0, "dl": [["Projeto", 6900.0], ["Condomínio", 795.12]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Dez", "ano": 2024, "mes": "Dezembro/2024", "rec": 7926.45, "desp": 7926.44, "sal": -0.04, "rd": 0, "dl": [["Projeto", 6900.0], ["Condomínio", 1026.44]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Jan", "ano": 2025, "mes": "Janeiro/2025", "rec": 1004.37, "desp": 1004.36, "sal": -0.03, "rd": 0, "dl": [["Condomínio", 1004.36]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Fev", "ano": 2025, "mes": "Fevereiro/2025", "rec": 1938.81, "desp": 1938.8, "sal": -0.02, "rd": 0, "dl": [["Projeto", 1000.0], ["Condomínio", 938.8]], "obs": "regime reembolso (cada família repõe sua parte)"}, {"m": "Mar", "ano": 2025, "mes": "Março/2025", "rec": 6000.0, "desp": 1158.14, "sal": 4841.84, "rd": 0, "dl": [["Condomínio", 1158.14]], "obs": ""}, {"m": "Abr", "ano": 2025, "mes": "Abril/2025", "rec": 6000.0, "desp": 938.8, "sal": 9903.04, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Mai", "ano": 2025, "mes": "Maio/2025", "rec": 6000.0, "desp": 938.8, "sal": 14964.24, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Jun", "ano": 2025, "mes": "Junho/2025", "rec": 6000.0, "desp": 938.8, "sal": 20025.44, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Jul", "ano": 2025, "mes": "Julho/2025", "rec": 6000.0, "desp": 938.8, "sal": 25086.64, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Ago", "ano": 2025, "mes": "Agosto/2025", "rec": 6000.0, "desp": 938.8, "sal": 30147.84, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Set", "ano": 2025, "mes": "Setembro/2025", "rec": 6000.0, "desp": 938.8, "sal": 35209.04, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Out", "ano": 2025, "mes": "Outubro/2025", "rec": 6000.0, "desp": 938.8, "sal": 40270.24, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Nov", "ano": 2025, "mes": "Novembro/2025", "rec": 6000.0, "desp": 938.8, "sal": 45331.44, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}, {"m": "Dez", "ano": 2025, "mes": "Dezembro/2025", "rec": 6000.0, "desp": 938.8, "sal": 50392.64, "rd": 0, "dl": [["Condomínio", 938.8]], "obs": ""}];
+const rec=x=>x.aportes?x.aportes.reduce((s,a)=>s+a.v,0):x.rec;
+const desp=x=>x.despesas?x.despesas.reduce((s,a)=>s+a.v,0):x.desp;
+const sal=x=>x.saldo!==undefined?x.saldo:x.sal;
+const todos=[...hist,...d2026];
+todos.forEach(x=>x.mn=MNUM[x.m]);
+todos.sort((a,b)=>a.ano-b.ano||a.mn-b.mn);
 
-// ---- Gráfico curvo (spline suave) com áreas translúcidas, estilo dashboard ----
+// ---------- GRÁFICO (scroll horizontal) ----------
 (function(){
-  const box=document.getElementById('g-evo');
-  const W=340,H=206,pl=20,pr=20,pt=30,pb=26,rendBand=15;
-  const lineTop=pt, lineBot=H-pb-rendBand-18;
-  const R=dados.map(totAp), D=dados.map(totDs), RD=dados.map(d=>d.rd);
-  const vmax=Math.max(...R,...D)*1.18, rdmax=Math.max(...RD);
-  const x=i=>pl+i*((W-pl-pr)/(dados.length-1));
-  const yv=v=>lineTop+(1-v/vmax)*(lineBot-lineTop);
+  const serie=todos.filter(x=>!(x.ano===2022&&x.mn===6)); // exclui o terreno (outlier 126k)
+  const step=46, H=176, pt=24, pb=22, rendBand=14, padL=18, padR=18;
+  const W=padL+padR+(serie.length-1)*step;
+  const lineTop=pt, lineBot=H-pb-rendBand-12;
+  const R=serie.map(rec), D=serie.map(desp), RD=serie.map(x=>x.rd);
+  const vmax=Math.max(...R,...D)*1.16, rdmax=Math.max(...RD,1);
+  const x=i=>padL+i*step, yv=v=>lineTop+(1-v/vmax)*(lineBot-lineTop);
   const kf=v=> v>=1000 ? (v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1}).replace(/,0$/,'')+'k' : fmt0(v);
-  // spline suave Catmull-Rom -> bézier cúbica
   function smooth(p){let d=`M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
-    for(let i=0;i<p.length-1;i++){const a=p[i-1]||p[i],b=p[i],c=p[i+1],e=p[i+2]||c;
-      const c1x=b[0]+(c[0]-a[0])/6, c1y=b[1]+(c[1]-a[1])/6, c2x=c[0]-(e[0]-b[0])/6, c2y=c[1]-(e[1]-b[1])/6;
-      d+=` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${c[0].toFixed(1)},${c[1].toFixed(1)}`;}
+    for(let i=0;i<p.length-1;i++){const x1=p[i][0],y1=p[i][1],x2=p[i+1][0],y2=p[i+1][1],xm=(x1+x2)/2;
+      d+=` C${xm.toFixed(1)},${y1.toFixed(1)} ${xm.toFixed(1)},${y2.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;}
     return d;}
-  const ptsR=dados.map((d,i)=>[x(i),yv(R[i])]), ptsD=dados.map((d,i)=>[x(i),yv(D[i])]);
+  const ptsR=serie.map((d,i)=>[x(i),yv(R[i])]), ptsD=serie.map((d,i)=>[x(i),yv(D[i])]);
   const pathR=smooth(ptsR), pathD=smooth(ptsD);
-  const close=` L${x(dados.length-1).toFixed(1)},${lineBot.toFixed(1)} L${x(0).toFixed(1)},${lineBot.toFixed(1)} Z`;
+  const close=` L${x(serie.length-1).toFixed(1)},${lineBot.toFixed(1)} L${x(0).toFixed(1)},${lineBot.toFixed(1)} Z`;
   const yr0=H-pb;
-  // pontos discretos + valor no lado livre
-  let pts='',vals='';
-  dados.forEach((d,i)=>{const pR=yv(R[i]),pD=yv(D[i]),rUp=pR<=pD;
-    pts+=`<circle cx="${x(i)}" cy="${pR.toFixed(1)}" r="1.8" fill="#2e6b4f"/><circle cx="${x(i)}" cy="${pD.toFixed(1)}" r="1.8" fill="#c25450"/>`;
-    vals+=`<text x="${x(i)}" y="${(pR+(rUp?-6:10)).toFixed(1)}" font-size="6.6" fill="#2e6b4f" text-anchor="middle" opacity=".8">${kf(R[i])}</text>`;
-    vals+=`<text x="${x(i)}" y="${(pD+(rUp?10:-6)).toFixed(1)}" font-size="6.6" fill="#c25450" text-anchor="middle" opacity=".8">${kf(D[i])}</text>`;});
-  let rend=dados.map((d,i)=>{const h=Math.max(2,(RD[i]/rdmax)*rendBand),bw=5;return `<rect x="${(x(i)-bw/2).toFixed(1)}" y="${(yr0-h).toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="1.4" fill="#cdab57" opacity=".8"/>
-    <text x="${x(i)}" y="${(yr0-h-2.5).toFixed(1)}" font-size="5.3" fill="#a8842f" text-anchor="middle">${fmt0(RD[i])}</text>`}).join('');
-  let labels=dados.map((d,i)=>`<text x="${x(i)}" y="${H-11}" font-size="7.5" fill="#9a958a" text-anchor="middle">${d.m}${d.atual?' •':''}</text>`).join('');
-  const colW=(W-pl-pr)/dados.length;
-  let hits=dados.map((d,i)=>`<rect class="hit" x="${(x(i)-colW/2).toFixed(1)}" y="0" width="${colW.toFixed(1)}" height="${H}" fill="transparent" data-i="${i}"/>`).join('');
-  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}">
+  let rend=serie.map((d,i)=>{const h=Math.max(1.5,(RD[i]/rdmax)*rendBand),bw=4;return `<rect x="${(x(i)-bw/2).toFixed(1)}" y="${(yr0-h).toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="1.2" fill="#cdab57" opacity=".85"/>`}).join('');
+  let yearMarks='',labels='';
+  serie.forEach((d,i)=>{
+    labels+=`<text x="${x(i)}" y="${H-9}" font-size="6.4" fill="#9a958a" text-anchor="middle">${d.m[0]}</text>`;
+    if(d.mn===1||i===0){yearMarks+=`<line x1="${x(i)-step/2}" y1="${pt-4}" x2="${x(i)-step/2}" y2="${yr0}" stroke="#efe9dc"/><text x="${x(i)-step/2+3}" y="${pt-6}" font-size="8" fill="#b6b0a3" font-weight="600">${d.ano}</text>`;}
+  });
+  let dots=serie.map((d,i)=>`<circle cx="${x(i)}" cy="${yv(R[i]).toFixed(1)}" r="1.7" fill="#2e6b4f"/><circle cx="${x(i)}" cy="${yv(D[i]).toFixed(1)}" r="1.7" fill="#c25450"/>`).join('');
+  let hits=serie.map((d,i)=>`<rect class="hit" x="${(x(i)-step/2).toFixed(1)}" y="0" width="${step}" height="${H}" fill="transparent" data-i="${i}"/>`).join('');
+  document.getElementById('g-evo').innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
     <defs>
       <linearGradient id="gR" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3f8b66" stop-opacity=".26"/><stop offset="1" stop-color="#3f8b66" stop-opacity="0"/></linearGradient>
       <linearGradient id="gD" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#c25450" stop-opacity=".22"/><stop offset="1" stop-color="#c25450" stop-opacity="0"/></linearGradient>
     </defs>
+    ${yearMarks}
     <path d="${pathR+close}" fill="url(#gR)"/><path d="${pathD+close}" fill="url(#gD)"/>
     <path d="${pathR}" fill="none" stroke="#2e6b4f" stroke-width="1.5" stroke-linecap="round"/>
     <path d="${pathD}" fill="none" stroke="#c25450" stroke-width="1.5" stroke-linecap="round"/>
-    ${pts}${vals}
-    <line x1="${pl}" y1="${yr0}" x2="${W-pr}" y2="${yr0}" stroke="#efe9dc"/>
-    <text x="${pl}" y="${yr0+8}" font-size="5.6" fill="#a8842f">✦ rendimento</text>${rend}${labels}${hits}
-  </svg><div class="tip" id="tip" hidden></div>`;
+    ${dots}
+    <line x1="${padL}" y1="${yr0}" x2="${W-padR}" y2="${yr0}" stroke="#efe9dc"/>${rend}${labels}${hits}
+  </svg>`;
   const tip=document.getElementById('tip');
-  function show(i){const d=dados[i],res=totAp(d)-totDs(d);
-    const pend=d.aportes.some(a=>a.st==='pend')?` <span class="y">(falta ${d.aportes.filter(a=>a.st==='pend').map(a=>a.f).join(', ')})</span>`:'';
+  function show(i){const d=serie[i],res=rec(d)-desp(d);
+    const pend=d.aportes&&d.aportes.some(a=>a.st==='pend')?` <span class="y">(falta ${d.aportes.filter(a=>a.st==='pend').map(a=>a.f).join(', ')})</span>`:'';
     tip.innerHTML=`<b>${d.mes}${d.atual?' · em curso':''}</b><br>
-      <span class="g">▲ Receitas: R$ ${fmt0(totAp(d))}</span>${pend}<br>
-      <span class="r">▼ Despesas: R$ ${fmt(totDs(d))}</span><br>
+      <span class="g">▲ Receitas: R$ ${fmt0(rec(d))}</span>${pend}<br>
+      <span class="r">▼ Despesas: R$ ${fmt(desp(d))}</span><br>
       Resultado do mês: <b>${res>=0?'+':'−'}R$ ${fmt(Math.abs(res))}</b><br>
-      <span class="y">✦ Rendimento: +R$ ${fmt(d.rd)}</span><br>
-      Saldo do caixa: <b>R$ ${fmt(d.saldo)}</b>`;
-    tip.hidden=false;
-    const rect=box.getBoundingClientRect(), px=(x(i)/W)*rect.width;
-    tip.style.left=Math.min(Math.max(px-66,2),rect.width-142)+'px'; tip.style.top='4px';
-  }
-  box.querySelectorAll('.hit').forEach(r=>{const i=+r.dataset.i;
+      ${d.rd?`<span class="y">✦ Rendimento: +R$ ${fmt(d.rd)}</span><br>`:''}
+      Saldo do caixa: <b>R$ ${fmt(sal(d))}</b>`;
+    tip.hidden=false;}
+  document.querySelectorAll('#g-evo .hit').forEach(r=>{const i=+r.dataset.i;
     r.addEventListener('mouseenter',()=>show(i)); r.addEventListener('click',()=>show(i)); r.addEventListener('mouseleave',()=>tip.hidden=true);});
+  // começa mostrando o presente (rolado à direita)
+  const sw=document.getElementById('scrollwrap'); sw.scrollLeft=sw.scrollWidth;
 })();
 
-// ---- Tabela expansível ----
-const stTxt={ok:'pago',pend:'pendente',par:'parcial'};
-const tb=document.getElementById('tbody');
-dados.forEach((x,i)=>{
-  const ap=totAp(x), ds=totDs(x);
-  let ah=x.aportes.map(a=>`<div class="ln"><span>${a.f}<span class="st ${a.st}">${stTxt[a.st]}</span>${a.o?`<br><span class="obsmin">${a.o}</span>`:''}</span><span class="pos">R$ ${fmt(a.v)}</span></div>`).join('');
-  let dh=x.despesas.map(d=>`<div class="ln"><span>${d.d}${d.o?`<br><span class="obsmin">${d.o}</span>`:''}</span><span class="neg">R$ ${fmt(d.v)}</span></div>`).join('');
-  tb.innerHTML+=`<tr class="mes" onclick="tg(${i})" id="r${i}">
-      <td><span class="chev">▶</span> ${x.m}${x.atual?' ·🟢':''}</td>
-      <td class="pos">${ap?fmt0(ap):'—'}</td><td class="neg">${fmt0(ds)}</td>
-      <td class="pos">+${fmt0(x.rd)}</td><td class="sld">${x.atual?'em curso':fmt0(x.saldo)}</td></tr>
-    <tr class="det" id="d${i}" hidden><td colspan="5"><div class="detinner">
-      <div class="comp"><div class="b">Em conta<b>R$ ${fmt(x.conta)}</b></div><div class="b">No fundo<b>R$ ${fmt(x.fundo)}</b></div></div>
-      <div class="sechead"><span class="tt">▲ Aportes</span><span class="vv pos">R$ ${fmt(ap)}</span></div>${ah}
-      <div class="sechead"><span class="tt">▼ Despesas</span><span class="vv neg">R$ ${fmt(ds)}</span></div>${dh}
-      <div class="sechead"><span class="tt">✦ Rendimento do mês</span><span class="vv pos">+R$ ${fmt(x.rd)}</span></div>
-    </div></td></tr>`;
-});
-function tg(i){const r=document.getElementById('r'+i),d=document.getElementById('d'+i);
-  const op=!d.hidden; d.hidden=op; r.classList.toggle('open',!op);}
-tg(dados.length-1);
+// ---------- TABELA por ano ----------
+(function(){
+  const stTxt={ok:'pago',pend:'pendente',par:'parcial'};
+  const anos=[...new Set(todos.map(x=>x.ano))].sort((a,b)=>b-a);
+  const box=document.getElementById('anos'); let uid=0;
+  function detalhe(x){
+    let comp = x.fundo!==undefined ? `<div class="comp"><div class="b">Em conta<b>R$ ${fmt(x.conta)}</b></div><div class="b">No fundo<b>R$ ${fmt(x.fundo)}</b></div></div>`:'';
+    let ah = x.aportes
+      ? x.aportes.map(a=>`<div class="ln"><span>${a.f}<span class="st ${a.st}">${stTxt[a.st]}</span>${a.o?`<br><span class="obsmin">${a.o}</span>`:''}</span><span class="pos">R$ ${fmt(a.v)}</span></div>`).join('')
+      : `<div class="ln"><span>Contribuição das 3 famílias${x.obs?`<br><span class="obsmin">${x.obs}</span>`:''}</span><span class="pos">R$ ${fmt(x.rec)}</span></div>`;
+    let dl = x.despesas ? x.despesas.map(d=>[d.d,d.v,d.o]) : x.dl.map(c=>[c[0],c[1],'']);
+    let dh = dl.map(d=>`<div class="ln"><span>${d[0]}${d[2]?`<br><span class="obsmin">${d[2]}</span>`:''}</span><span class="neg">R$ ${fmt(d[1])}</span></div>`).join('');
+    return `<div class="detinner">${comp}
+      <div class="sechead"><span class="tt">▲ Aportes</span><span class="vv pos">R$ ${fmt(rec(x))}</span></div>${ah}
+      <div class="sechead"><span class="tt">▼ Despesas</span><span class="vv neg">R$ ${fmt(desp(x))}</span></div>${dh}
+      ${x.rd?`<div class="sechead"><span class="tt">✦ Rendimento do mês</span><span class="vv pos">+R$ ${fmt(x.rd)}</span></div>`:''}</div>`;
+  }
+  anos.forEach(yr=>{
+    const meses=todos.filter(x=>x.ano===yr).sort((a,b)=>b.mn-a.mn);
+    const apY=meses.reduce((s,x)=>s+rec(x),0), rdY=meses.reduce((s,x)=>s+x.rd,0), salY=sal(meses[0]);
+    let rows='';
+    meses.forEach(x=>{const id=uid++;
+      rows+=`<tr class="mes" onclick="tg(${id})" id="r${id}">
+        <td><span class="chev">▶</span> ${x.m}${x.atual?' 🟢':''}</td>
+        <td class="pos">${fmt0(rec(x))}</td><td class="neg">${fmt0(desp(x))}</td>
+        <td class="pos">${x.rd?'+'+fmt0(x.rd):'—'}</td><td class="sld">${x.atual?'em curso':fmt0(sal(x))}</td></tr>
+        <tr class="det" id="d${id}" hidden><td colspan="5">${detalhe(x)}</td></tr>`;});
+    box.innerHTML+=`<details class="ano"${yr===2026?' open':''}>
+      <summary><span class="chev">▶</span><span class="yr">${yr}</span>
+        <span class="yinfo">aportes <b>R$ ${fmt0(apY)}</b> · saldo fim <b>R$ ${fmt0(salY)}</b>${rdY?` · rend. +${fmt0(rdY)}`:''}</span></summary>
+      <table><thead><tr><th>Mês</th><th>Aportes</th><th>Despesas</th><th>Rend.</th><th>Saldo</th></tr></thead><tbody>${rows}</tbody></table>
+    </details>`;
+  });
+})();
+function tg(i){const r=document.getElementById('r'+i),d=document.getElementById('d'+i);const op=!d.hidden;d.hidden=op;r.classList.toggle('open',!op);}
 
-// ---- categorias ----
+// ---------- categorias ----------
 const cats=[{nm:'Terreno',v:120000},{nm:'Condomínio',v:42595.14},{nm:'Projeto',v:28600},{nm:'Documentação',v:6018.79},{nm:'Limpeza',v:2900}];
 const mxc=Math.max(...cats.map(c=>c.v)),cd=document.getElementById('cats');
 cats.forEach(c=>cd.innerHTML+=`<div class="cat"><div class="nm">${c.nm}</div><div class="bar" style="width:${Math.max(6,c.v/mxc*100)}%"></div><div class="vl">R$ ${fmt(c.v)}</div></div>`);
