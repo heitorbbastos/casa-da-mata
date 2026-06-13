@@ -6,50 +6,58 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Casa da Mata — Prestação de Contas</title>
 <style>
-  :root{--verde:#2e6b4f;--verde2:#3f8b66;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#b0413e;--laranja:#c8881f;}
+  :root{--verde:#2e6b4f;--verde2:#3f8b66;--verde3:#6db38a;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#b0413e;--laranja:#c8881f;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;padding:16px;max-width:860px;margin:0 auto}
+  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;padding:16px;max-width:880px;margin:0 auto}
   header{text-align:center;padding:18px 0 8px}
   header h1{font-size:1.5rem;color:var(--verde);letter-spacing:.3px}
   header .sub{color:var(--mut);font-size:.85rem;margin-top:4px}
   .caixa-hoje{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;border-radius:16px;padding:22px;text-align:center;margin:16px 0;box-shadow:0 4px 14px rgba(46,107,79,.25)}
   .caixa-hoje .label{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;opacity:.85}
   .caixa-hoje .valor{font-size:2.4rem;font-weight:700;margin:4px 0}
-  .caixa-hoje .obs{font-size:.8rem;opacity:.9}
+  .caixa-hoje .obs{font-size:.78rem;opacity:.9}
   .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
   .card{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px}
   .card .t{font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
-  .card .v{font-size:1.25rem;font-weight:650;margin-top:3px}
-  .card .d{font-size:.75rem;color:var(--mut);margin-top:2px}
+  .card .v{font-size:1.2rem;font-weight:650;margin-top:3px}
+  .card .d{font-size:.74rem;color:var(--mut);margin-top:2px}
   .card.rend .v{color:var(--verde2)}
-  h2{font-size:1.05rem;color:var(--verde);margin:22px 0 8px;border-bottom:2px solid var(--linha);padding-bottom:4px}
-  /* meses expansíveis */
-  details.mes{background:var(--card);border:1px solid var(--linha);border-radius:12px;margin:8px 0;overflow:hidden}
-  details.mes>summary{list-style:none;cursor:pointer;padding:13px 15px;display:flex;align-items:center;gap:10px}
-  details.mes>summary::-webkit-details-marker{display:none}
-  summary .chev{color:var(--mut);transition:transform .2s;font-size:.8rem}
-  details[open] summary .chev{transform:rotate(90deg)}
-  summary .mnome{font-weight:650;flex:1}
-  summary .msaldo{font-weight:650;color:var(--verde)}
-  summary .mrend{font-size:.72rem;color:var(--verde2);margin-left:6px}
-  .det{padding:4px 16px 14px;border-top:1px dashed var(--linha)}
-  .det .sub{font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 5px}
-  .linha{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:.86rem;border-bottom:1px solid #f1efe8}
-  .linha:last-child{border-bottom:none}
-  .linha .desc{color:var(--txt)} .linha .vd{white-space:nowrap;color:var(--vermelho)}
-  .linha .va{white-space:nowrap;color:var(--verde2)}
-  .st{font-size:.7rem;padding:1px 7px;border-radius:8px;margin-left:6px;vertical-align:middle}
-  .st.ok{background:#e3f0e8;color:var(--verde)} .st.pend{background:#f0ece2;color:var(--mut)} .st.par{background:#faf0db;color:var(--laranja)}
+  h2{font-size:1.05rem;color:var(--verde);margin:24px 0 8px;border-bottom:2px solid var(--linha);padding-bottom:4px}
+  .chartbox{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px 12px 8px}
+  .chartbox .ct{font-size:.8rem;color:var(--mut);margin-bottom:6px}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  .legend{display:flex;gap:14px;justify-content:center;font-size:.72rem;color:var(--mut);margin-top:6px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  /* tabela expansível */
+  table{width:100%;border-collapse:collapse;font-size:.82rem;background:var(--card);border-radius:10px;overflow:hidden}
+  th,td{padding:8px 7px;text-align:right;border-bottom:1px solid var(--linha)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:#eef0ea;color:var(--verde);font-size:.68rem;text-transform:uppercase;letter-spacing:.3px}
+  tr.mes{cursor:pointer}
+  tr.mes:hover{background:#f7f8f4}
+  tr.mes .chev{color:var(--mut);font-size:.7rem;display:inline-block;width:12px;transition:transform .2s}
+  tr.mes.open .chev{transform:rotate(90deg)}
+  td.sld{font-weight:650;color:var(--verde)}
+  .pos{color:var(--verde2)} .neg{color:var(--vermelho)}
+  tr.det>td{background:#fbfaf6;padding:0}
+  .detinner{padding:10px 14px 14px}
+  .detinner .sub{font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 4px}
+  .comp{display:flex;gap:8px;margin:2px 0 8px}
+  .comp .b{flex:1;background:#eef0ea;border-radius:8px;padding:7px 9px;font-size:.78rem}
+  .comp .b b{display:block;font-size:.95rem;color:var(--verde)}
+  .ln{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:.83rem;border-bottom:1px solid #f1efe8}
+  .ln:last-child{border-bottom:none}
   .obsmin{font-size:.72rem;color:var(--mut);font-style:italic}
-  .tot{display:flex;justify-content:space-between;font-weight:650;font-size:.85rem;padding-top:7px;margin-top:4px;border-top:2px solid var(--linha)}
-  .leg{font-size:.75rem;color:var(--mut);margin-top:8px}
+  .st{font-size:.68rem;padding:1px 6px;border-radius:8px;margin-left:5px}
+  .st.ok{background:#e3f0e8;color:var(--verde)} .st.pend{background:#f0ece2;color:var(--mut)} .st.par{background:#faf0db;color:var(--laranja)}
+  .leg{font-size:.74rem;color:var(--mut);margin-top:8px}
   .nota{background:#fff8e8;border:1px solid #e8dcb0;border-radius:10px;padding:12px 14px;font-size:.82rem;color:#6b5d2f;margin:14px 0}
   .nota b{color:var(--terra)}
   .cat{display:flex;align-items:center;gap:8px;margin:6px 0}
   .cat .bar{height:14px;border-radius:4px;background:var(--verde2)}
-  .cat .nm{flex:0 0 110px;font-size:.82rem}
+  .cat .nm{flex:0 0 104px;font-size:.82rem}
   .cat .vl{font-size:.8rem;color:var(--mut);white-space:nowrap}
-  footer{text-align:center;color:var(--mut);font-size:.75rem;margin:24px 0 8px}
+  footer{text-align:center;color:var(--mut);font-size:.74rem;margin:24px 0 8px}
 </style>
 </head>
 <body>
@@ -59,27 +67,37 @@
 </header>
 
 <div class="caixa-hoje">
-  <div class="label">Caixa real hoje</div>
-  <div class="valor">R$ 64.545,00</div>
-  <div class="obs">conta (fim de maio) + fundo (13/06) · junho em andamento — fecha com o extrato do mês</div>
+  <div class="label">Caixa real</div>
+  <div class="valor">R$ 67.420,66</div>
+  <div class="obs">conta + fundo · junho em curso (falta aporte do Zé/Luiza) · fecha com o extrato do mês</div>
 </div>
 
 <div class="cards">
-  <div class="card"><div class="t">Conta Caixa</div><div class="v">R$ 7.618,61</div><div class="d">saldo em conta</div></div>
-  <div class="card"><div class="t">Fundo (renda fixa)</div><div class="v">R$ 56.926,39</div><div class="d">aplicado, rendendo</div></div>
-  <div class="card rend"><div class="t">Rendimentos</div><div class="v">+ R$ 2.834,68</div><div class="d">desde jan/2026</div></div>
-  <div class="card"><div class="t">Aporte mensal</div><div class="v">R$ 2.000</div><div class="d">por família · foi R$ 3.000 em jan-fev</div></div>
+  <div class="card"><div class="t">Em conta (Caixa)</div><div class="v">R$ 10.494,27</div><div class="d">após aportes de junho</div></div>
+  <div class="card"><div class="t">Investido (fundo)</div><div class="v">R$ 56.926,39</div><div class="d">renda fixa</div></div>
+  <div class="card rend"><div class="t">Rendimentos</div><div class="v">+ R$ 2.834,68</div><div class="d">desde jan/26</div></div>
+  <div class="card"><div class="t">Aporte/família</div><div class="v">R$ 2.000</div><div class="d">foi R$ 3.000 jan-fev</div></div>
 </div>
 
-<h2>📅 Mês a mês — 2026 <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque para abrir)</span></h2>
-<div id="meses"></div>
-<div class="leg">Saldo final = foto real do banco (conta + fundo). Rendimento estimado (~0,95%/mês) até o app da Caixa detalhar o exato. Itens com <b>*</b> em conciliação final.</div>
+<h2>📈 Fluxo de caixa — saldo mês a mês</h2>
+<div class="chartbox"><div class="ct">Evolução do caixa total (conta + fundo)</div><div id="g-saldo"></div></div>
+
+<h2>💸 Aportes recebidos × despesas pagas</h2>
+<div class="chartbox"><div id="g-fluxo"></div>
+  <div class="legend"><span><i style="background:#3f8b66"></i>Aportes</span><span><i style="background:#b0413e"></i>Despesas</span></div>
+</div>
+
+<h2>📅 Tabela mês a mês <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque na linha p/ detalhar)</span></h2>
+<table>
+  <thead><tr><th>Mês</th><th>Aportes</th><th>Despesas</th><th>Rend.</th><th>Saldo</th></tr></thead>
+  <tbody id="tbody"></tbody>
+</table>
+<div class="leg">Saldo = foto real do banco (conta + fundo). Rendimento estimado (~0,95%/mês) até o app da Caixa detalhar. Itens com <b>*</b> em conciliação.</div>
 
 <div class="nota">
-  <b>Correção de contabilidade (jun/2026):</b> uma revisão cruzando os resumos com os extratos do banco
-  encontrou um erro de registro a partir de março — o saldo foi reaberto em R$ 73.840,91 quando o mês
-  havia fechado em R$ 61.686,80 (salto de ~R$ 12 mil que se repetiu nos resumos seguintes).
-  <b>Nenhum centavo foi perdido</b> — o dinheiro sempre esteve no banco; corrigiu-se apenas o número.
+  <b>Correção (jun/2026):</b> revisão cruzando os resumos com os extratos achou um erro de registro a partir
+  de março — o saldo foi reaberto em R$ 73.840,91 quando o mês fechou em R$ 61.686,80 (~R$ 12 mil que se
+  repetiram nos meses seguintes). <b>Nenhum centavo sumiu</b> — o dinheiro sempre esteve no banco; corrigiu-se o número.
 </div>
 
 <h2>🏗️ Para onde o dinheiro foi (desde 2022)</h2>
@@ -93,89 +111,92 @@
 
 <script>
 const fmt = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const F = ({id:'heitor',n:'Heitor/Wanessa'}); // só p/ referência
-// status: 'ok' | 'pend' | 'par'
+const fmt0 = v => Math.round(v).toLocaleString('pt-BR');
 const dados = [
- {m:'Janeiro', saldo:53245.67, rend:405.46, alvo:3000,
-   aportes:[
-     {fam:'Heitor/Wanessa', v:3000, st:'ok', obs:'pagamentos por fora + complemento Pix R$561,20'},
-     {fam:'Gilberto/Priscila', v:3000, st:'ok', obs:'Pix 08/01'},
-     {fam:'Zé/Luiza', v:3000, st:'ok', obs:'Pix 12/01'},
-   ],
-   despesas:[
-     {d:'Sondagem geotécnica (Sodré)', v:2600.00, obs:'pago 20 e 27/01'},
-     {d:'Condomínio Cumaru 05+07', v:833.52, obs:'416,76 ×2 *'},
-   ]},
- {m:'Fevereiro', saldo:61359.88, rend:569.38, alvo:3000,
-   aportes:[
-     {fam:'Heitor/Wanessa', v:3000, st:'ok', obs:''},
-     {fam:'1 família', v:3000, st:'ok', obs:'Pix 09/02 — remetente a confirmar'},
-     {fam:'Gilberto/Priscila', v:0, st:'pend', obs:'avisou em 20/02 que não pagaria fev *'},
-   ],
-   despesas:[
-     {d:'Condomínio Cumaru 05+07', v:833.52, obs:'416,76 ×2'},
-   ]},
- {m:'Março', saldo:65970.86, rend:607.44, alvo:2000,
-   aportes:[
-     {fam:'3 famílias', v:6000, st:'ok', obs:'R$ 2.000 cada (voltou de R$ 3.000)'},
-   ],
-   despesas:[
-     {d:'Condomínio Cumaru 05+07', v:833.52, obs:'416,76 ×2'},
-   ]},
- {m:'Abril', saldo:58693.84, rend:514.68, alvo:2000,
-   aportes:[
-     {fam:'Heitor/Wanessa', v:2000, st:'ok', obs:'condomínio 890,10 + complemento 1.109,90'},
-     {fam:'Gilberto/Priscila', v:2000, st:'ok', obs:''},
-     {fam:'Zé/Luiza', v:2000, st:'ok', obs:''},
-   ],
-   despesas:[
-     {d:'Projeto Hidráulico/estrutural', v:14040.00, obs:'pago 06/04'},
-     {d:'Condomínio Cumaru 05+07', v:890.10, obs:'445,05 ×2'},
-   ]},
- {m:'Maio', saldo:64321.97, rend:514.68, alvo:2000,
-   aportes:[
-     {fam:'3 famílias', v:6000, st:'ok', obs:'R$ 2.000 cada'},
-   ],
-   despesas:[
-     {d:'Condomínio Cumaru 05+07', v:890.10, obs:'445,05 ×2'},
-   ]},
- {m:'Junho', saldo:64545.00, rend:223.03, alvo:2000, atual:true,
-   aportes:[
-     {fam:'Gilberto/Priscila', v:2000, st:'ok', obs:'Pix BBSH (Priscila enviou dela + Gilberto)'},
-     {fam:'Zé/Luiza', v:0, st:'pend', obs:'aguardando'},
-     {fam:'Heitor/Wanessa', v:2000, st:'ok', obs:'condomínio R$1.124,34 (Bradesco) + complemento R$875,66 (Pix 13/06) ✓'},
-   ],
-   despesas:[
-     {d:'Condomínio Cumaru 05+07', v:1124.34, obs:'562,17 ×2 — pago via Bradesco'},
-   ]},
+ {m:'Jan', mes:'Janeiro', alvo:3000, rd:405.46, fundo:53245.67, conta:0, saldo:53245.67,
+   aportes:[{f:'Heitor/Wanessa',v:3000,st:'ok',o:'pagto por fora + complemento Pix 561,20'},{f:'Gilberto/Priscila',v:3000,st:'ok',o:'Pix 08/01'},{f:'Zé/Luiza',v:3000,st:'ok',o:'Pix 12/01'}],
+   despesas:[{d:'Sondagem geotécnica (Sodré)',v:2600,o:'20 e 27/01'},{d:'Condomínio Cumaru 05+07',v:833.52,o:'416,76 ×2 *'}]},
+ {m:'Fev', mes:'Fevereiro', alvo:3000, rd:569.38, fundo:60815.05, conta:544.83, saldo:61359.88,
+   aportes:[{f:'Heitor/Wanessa',v:3000,st:'ok',o:''},{f:'1 família',v:3000,st:'ok',o:'Pix 09/02 — remetente a confirmar'},{f:'Gilberto/Priscila',v:0,st:'pend',o:'avisou em 20/02 que não pagaria fev *'}],
+   despesas:[{d:'Condomínio Cumaru 05+07',v:833.52,o:'416,76 ×2'}]},
+ {m:'Mar', mes:'Março', alvo:2000, rd:607.44, fundo:65422.49, conta:548.37, saldo:65970.86,
+   aportes:[{f:'3 famílias',v:6000,st:'ok',o:'R$ 2.000 cada (voltou de R$ 3.000)'}],
+   despesas:[{d:'Condomínio Cumaru 05+07',v:833.52,o:'416,76 ×2'}]},
+ {m:'Abr', mes:'Abril', alvo:2000, rd:514.68, fundo:56188.68, conta:2505.16, saldo:58693.84,
+   aportes:[{f:'Heitor/Wanessa',v:2000,st:'ok',o:'condomínio 890,10 + complemento 1.109,90'},{f:'Gilberto/Priscila',v:2000,st:'ok',o:''},{f:'Zé/Luiza',v:2000,st:'ok',o:''}],
+   despesas:[{d:'Projeto Hidráulico/estrutural',v:14040,o:'pago 06/04'},{d:'Condomínio Cumaru 05+07',v:890.10,o:'445,05 ×2'}]},
+ {m:'Mai', mes:'Maio', alvo:2000, rd:514.68, fundo:56703.36, conta:7618.61, saldo:64321.97,
+   aportes:[{f:'3 famílias',v:6000,st:'ok',o:'R$ 2.000 cada'}],
+   despesas:[{d:'Condomínio Cumaru 05+07',v:890.10,o:'445,05 ×2'}]},
+ {m:'Jun', mes:'Junho', alvo:2000, rd:223.03, fundo:56926.39, conta:10494.27, saldo:67420.66, atual:true,
+   aportes:[{f:'Gilberto/Priscila',v:2000,st:'ok',o:'Pix BBSH (Priscila enviou dela + Gilberto)'},{f:'Heitor/Wanessa',v:2000,st:'ok',o:'condomínio 1.124,34 (Bradesco) + complemento 875,66 (Pix 13/06)'},{f:'Zé/Luiza',v:0,st:'pend',o:'aguardando'}],
+   despesas:[{d:'Condomínio Cumaru 05+07',v:1124.34,o:'562,17 ×2 — pago via Bradesco'}]},
 ];
-const stTxt={ok:'pago',pend:'pendente',par:'parcial'};
-const box=document.getElementById('meses');
-dados.slice().reverse().forEach(x=>{
-  const ap = x.aportes.reduce((s,a)=>s+a.v,0);
-  const ds = x.despesas.reduce((s,d)=>s+d.v,0);
-  let ah=''; x.aportes.forEach(a=>{
-    ah+=`<div class="linha"><span class="desc">${a.fam}<span class="st ${a.st}">${stTxt[a.st]}</span>${a.obs?`<br><span class="obsmin">${a.obs}</span>`:''}</span><span class="va">R$ ${fmt(a.v)}</span></div>`;
-  });
-  let dh=''; x.despesas.forEach(d=>{
-    dh+=`<div class="linha"><span class="desc">${d.d}${d.obs?`<br><span class="obsmin">${d.obs}</span>`:''}</span><span class="vd">R$ ${fmt(d.v)}</span></div>`;
-  });
-  box.innerHTML += `<details class="mes"${x.atual?' open':''}>
-    <summary><span class="chev">▶</span><span class="mnome">${x.m}${x.atual?' · em curso':''}</span>
-      <span class="msaldo">${x.atual?'em curso':'R$ '+fmt(x.saldo)}</span><span class="mrend">+${fmt(x.rend)} rend.</span></summary>
-    <div class="det">
-      <div class="sub">Aportes (meta R$ ${fmt(x.alvo)}/família)</div>${ah}
-      <div class="tot"><span>Total aportes</span><span class="va">R$ ${fmt(ap)}</span></div>
-      <div class="sub">Despesas</div>${dh}
-      <div class="tot"><span>Total despesas</span><span class="vd">R$ ${fmt(ds)}</span></div>
-    </div>
-  </details>`;
-});
+const totAp = x => x.aportes.reduce((s,a)=>s+a.v,0);
+const totDs = x => x.despesas.reduce((s,a)=>s+a.v,0);
 
+// ---- Gráfico 1: linha do saldo ----
+(function(){
+  const W=320,H=140,pl=8,pr=8,pt=22,pb=20;
+  const v=dados.map(d=>d.saldo), mn=Math.min(...v)-1500, mx=Math.max(...v)+1500;
+  const x=i=>pl+i*((W-pl-pr)/(dados.length-1));
+  const y=val=>pt+(1-(val-mn)/(mx-mn))*(H-pt-pb);
+  let pts=dados.map((d,i)=>`${x(i)},${y(d.saldo)}`).join(' ');
+  let area=`M ${x(0)},${H-pb} L `+dados.map((d,i)=>`${x(i)},${y(d.saldo)}`).join(' L ')+` L ${x(dados.length-1)},${H-pb} Z`;
+  let dots=dados.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.saldo)}" r="3" fill="#2e6b4f"/>
+    <text x="${x(i)}" y="${y(d.saldo)-7}" font-size="7.5" fill="#2e6b4f" text-anchor="middle">${fmt0(d.saldo/1000)}k</text>
+    <text x="${x(i)}" y="${H-7}" font-size="8" fill="#7a766c" text-anchor="middle">${d.m}</text>`).join('');
+  document.getElementById('g-saldo').innerHTML=`<svg viewBox="0 0 ${W} ${H}">
+    <defs><linearGradient id="gv" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3f8b66" stop-opacity=".28"/><stop offset="1" stop-color="#3f8b66" stop-opacity="0"/></linearGradient></defs>
+    <path d="${area}" fill="url(#gv)"/><polyline points="${pts}" fill="none" stroke="#2e6b4f" stroke-width="2"/>${dots}</svg>`;
+})();
+
+// ---- Gráfico 2: barras divergentes aportes x despesas ----
+(function(){
+  const W=320,H=170,pb=18,pt=16,gap=6;
+  const n=dados.length, bw=(W-(n+1)*gap)/(n*2);
+  const aps=dados.map(totAp), dss=dados.map(totDs);
+  const mx=Math.max(...aps,...dss,1);
+  const y0=pt+(H-pt-pb)*0.5, half=(H-pt-pb)*0.5;
+  let bars='';
+  dados.forEach((d,i)=>{
+    const gx=gap+i*(2*bw+gap);
+    const ha=aps[i]/mx*half, hd=dss[i]/mx*half;
+    bars+=`<rect x="${gx}" y="${y0-ha}" width="${bw}" height="${ha}" rx="1.5" fill="#3f8b66"/>
+      <rect x="${gx+bw}" y="${y0}" width="${bw}" height="${hd}" rx="1.5" fill="#b0413e"/>
+      <text x="${gx+bw}" y="${y0-ha-3}" font-size="6.5" fill="#3f8b66" text-anchor="middle">${aps[i]?fmt0(aps[i]/1000)+'k':''}</text>
+      <text x="${gx+bw}" y="${y0+hd+8}" font-size="6.5" fill="#b0413e" text-anchor="middle">${dss[i]>=1000?fmt0(dss[i]/1000)+'k':fmt0(dss[i])}</text>
+      <text x="${gx+bw}" y="${H-4}" font-size="8" fill="#7a766c" text-anchor="middle">${d.m}</text>`;
+  });
+  document.getElementById('g-fluxo').innerHTML=`<svg viewBox="0 0 ${W} ${H}"><line x1="0" y1="${y0}" x2="${W}" y2="${y0}" stroke="#e6e2d8"/>${bars}</svg>`;
+})();
+
+// ---- Tabela expansível ----
+const stTxt={ok:'pago',pend:'pendente',par:'parcial'};
+const tb=document.getElementById('tbody');
+dados.forEach((x,i)=>{
+  const ap=totAp(x), ds=totDs(x);
+  let ah=x.aportes.map(a=>`<div class="ln"><span>${a.f}<span class="st ${a.st}">${stTxt[a.st]}</span>${a.o?`<br><span class="obsmin">${a.o}</span>`:''}</span><span class="pos">R$ ${fmt(a.v)}</span></div>`).join('');
+  let dh=x.despesas.map(d=>`<div class="ln"><span>${d.d}${d.o?`<br><span class="obsmin">${d.o}</span>`:''}</span><span class="neg">R$ ${fmt(d.v)}</span></div>`).join('');
+  tb.innerHTML+=`<tr class="mes" onclick="tg(${i})" id="r${i}">
+      <td><span class="chev">▶</span> ${x.m}${x.atual?' ·🟢':''}</td>
+      <td class="pos">${ap?fmt0(ap):'—'}</td><td class="neg">${fmt0(ds)}</td>
+      <td class="pos">+${fmt0(x.rd)}</td><td class="sld">${x.atual?'em curso':fmt0(x.saldo)}</td></tr>
+    <tr class="det" id="d${i}" hidden><td colspan="5"><div class="detinner">
+      <div class="comp"><div class="b">Em conta<b>R$ ${fmt(x.conta)}</b></div><div class="b">No fundo<b>R$ ${fmt(x.fundo)}</b></div></div>
+      <div class="sub">Aportes (meta R$ ${fmt0(x.alvo)}/família)</div>${ah}
+      <div class="sub">Despesas</div>${dh}
+    </div></td></tr>`;
+});
+function tg(i){const r=document.getElementById('r'+i),d=document.getElementById('d'+i);
+  const op=!d.hidden; d.hidden=op; r.classList.toggle('open',!op);}
+// abre o mês atual
+tg(dados.length-1);
+
+// ---- categorias ----
 const cats=[{nm:'Terreno',v:120000},{nm:'Condomínio',v:42595.14},{nm:'Projeto',v:28600},{nm:'Documentação',v:6018.79},{nm:'Limpeza',v:2900}];
-const max=Math.max(...cats.map(c=>c.v)); const cd=document.getElementById('cats');
-cats.forEach(c=>{const w=Math.max(6,(c.v/max)*100);
-  cd.innerHTML+=`<div class="cat"><div class="nm">${c.nm}</div><div class="bar" style="width:${w}%"></div><div class="vl">R$ ${fmt(c.v)}</div></div>`;});
+const mxc=Math.max(...cats.map(c=>c.v)),cd=document.getElementById('cats');
+cats.forEach(c=>cd.innerHTML+=`<div class="cat"><div class="nm">${c.nm}</div><div class="bar" style="width:${Math.max(6,c.v/mxc*100)}%"></div><div class="vl">R$ ${fmt(c.v)}</div></div>`);
 </script>
 </body>
 </html>
