@@ -140,16 +140,17 @@ const dados = [
 const totAp = x => x.aportes.reduce((s,a)=>s+a.v,0);
 const totDs = x => x.despesas.reduce((s,a)=>s+a.v,0);
 
-// ---- Gráfico: linhas receita/despesa + área (resultado) + barras de rendimento + tooltip ----
+// ---- Gráfico: linhas finas receita/despesa + valores nos pontos + rendimento + tooltip ----
 (function(){
   const box=document.getElementById('g-evo');
-  const W=320,H=210,pl=14,pr=14,pt=20,pb=34,rendBand=28;
-  const lineTop=pt, lineBot=H-pb-rendBand-8;
+  const W=340,H=200,pl=20,pr=20,pt=26,pb=30,rendBand=20;
+  const lineTop=pt, lineBot=H-pb-rendBand-14;
   const R=dados.map(totAp), D=dados.map(totDs), RD=dados.map(d=>d.rd);
-  const vmax=Math.max(...R,...D)*1.08, rdmax=Math.max(...RD);
+  const vmax=Math.max(...R,...D)*1.14, rdmax=Math.max(...RD);
   const x=i=>pl+i*((W-pl-pr)/(dados.length-1));
   const yv=v=>lineTop+(1-v/vmax)*(lineBot-lineTop);
-  // área bicolor entre as duas linhas (verde: receita>despesa · vermelho: despesa>receita)
+  const kf=v=> v>=1000 ? (v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1}).replace(/,0$/,'')+'k' : fmt0(v);
+  // área bicolor sutil (verde: receita>despesa · vermelho: despesa>receita)
   let green='',red='';
   for(let i=0;i<dados.length-1;i++){
     const x0=x(i),x1=x(i+1),r0=yv(R[i]),r1=yv(R[i+1]),d0=yv(D[i]),d1=yv(D[i+1]),f0=R[i]-D[i],f1=R[i+1]-D[i+1];
@@ -162,18 +163,25 @@ const totDs = x => x.despesas.reduce((s,a)=>s+a.v,0);
   const lineR=dados.map((d,i)=>`${x(i)},${yv(R[i])}`).join(' ');
   const lineD=dados.map((d,i)=>`${x(i)},${yv(D[i])}`).join(' ');
   const yr0=H-pb;
-  let rend=dados.map((d,i)=>{const h=Math.max(2,(RD[i]/rdmax)*rendBand),bw=13;return `<rect x="${x(i)-bw/2}" y="${yr0-h}" width="${bw}" height="${h}" rx="2" fill="#c8881f" opacity=".8"/>
-    <text x="${x(i)}" y="${yr0-h-2}" font-size="6" fill="#c8881f" text-anchor="middle">${fmt0(RD[i])}</text>`}).join('');
-  let dots=dados.map((d,i)=>`<circle cx="${x(i)}" cy="${yv(R[i])}" r="3" fill="#2e6b4f" stroke="#fff" stroke-width="1"/><circle cx="${x(i)}" cy="${yv(D[i])}" r="3" fill="#b0413e" stroke="#fff" stroke-width="1"/>`).join('');
-  let labels=dados.map((d,i)=>`<text x="${x(i)}" y="${H-19}" font-size="8" fill="#7a766c" text-anchor="middle">${d.m}${d.atual?' •':''}</text>`).join('');
+  // pontos finos (donut) + valor de cada ponto no lado livre
+  let pts='',vals='';
+  dados.forEach((d,i)=>{const pR=yv(R[i]),pD=yv(D[i]),rUp=pR<=pD;
+    pts+=`<circle cx="${x(i)}" cy="${pR}" r="2.1" fill="#fff" stroke="#2e6b4f" stroke-width="1.3"/><circle cx="${x(i)}" cy="${pD}" r="2.1" fill="#fff" stroke="#b0413e" stroke-width="1.3"/>`;
+    vals+=`<text x="${x(i)}" y="${pR+(rUp?-6:11)}" font-size="6.8" fill="#2e6b4f" text-anchor="middle">${kf(R[i])}</text>`;
+    vals+=`<text x="${x(i)}" y="${pD+(rUp?11:-6)}" font-size="6.8" fill="#b0413e" text-anchor="middle">${kf(D[i])}</text>`;});
+  // barras de rendimento finas e suaves
+  let rend=dados.map((d,i)=>{const h=Math.max(2,(RD[i]/rdmax)*rendBand),bw=6;return `<rect x="${x(i)-bw/2}" y="${yr0-h}" width="${bw}" height="${h}" rx="1.5" fill="#cdab57"/>
+    <text x="${x(i)}" y="${yr0-h-2.5}" font-size="5.5" fill="#a8842f" text-anchor="middle">${fmt0(RD[i])}</text>`}).join('');
+  let labels=dados.map((d,i)=>`<text x="${x(i)}" y="${H-15}" font-size="7.5" fill="#9a958a" text-anchor="middle">${d.m}${d.atual?' •':''}</text>`).join('');
   const colW=(W-pl-pr)/dados.length;
   let hits=dados.map((d,i)=>`<rect class="hit" x="${x(i)-colW/2}" y="0" width="${colW}" height="${H}" fill="transparent" data-i="${i}"/>`).join('');
   box.innerHTML=`<svg viewBox="0 0 ${W} ${H}">
-    <path d="${green}" fill="#3f8b66" opacity=".18"/><path d="${red}" fill="#b0413e" opacity=".18"/>
-    <polyline points="${lineR}" fill="none" stroke="#2e6b4f" stroke-width="2"/>
-    <polyline points="${lineD}" fill="none" stroke="#b0413e" stroke-width="2"/>${dots}
-    <line x1="${pl}" y1="${yr0}" x2="${W-pr}" y2="${yr0}" stroke="#e6e2d8"/>
-    <text x="${pl}" y="${yr0+9}" font-size="7" fill="#c8881f">✦ rendimento (R$)</text>${rend}${labels}${hits}
+    <path d="${green}" fill="#3f8b66" opacity=".09"/><path d="${red}" fill="#b0413e" opacity=".10"/>
+    <polyline points="${lineR}" fill="none" stroke="#2e6b4f" stroke-width="1.25" stroke-linejoin="round"/>
+    <polyline points="${lineD}" fill="none" stroke="#b0413e" stroke-width="1.25" stroke-linejoin="round"/>
+    ${pts}${vals}
+    <line x1="${pl}" y1="${yr0}" x2="${W-pr}" y2="${yr0}" stroke="#efe9dc"/>
+    <text x="${pl}" y="${yr0+8}" font-size="5.8" fill="#a8842f">✦ rendimento</text>${rend}${labels}${hits}
   </svg><div class="tip" id="tip" hidden></div>`;
   const tip=document.getElementById('tip');
   function show(i){const d=dados[i],res=totAp(d)-totDs(d);
