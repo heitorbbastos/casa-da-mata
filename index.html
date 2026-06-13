@@ -156,13 +156,13 @@ todos.sort((a,b)=>a.ano-b.ano||a.mn-b.mn);
 
 // ---------- GRÁFICO (scroll horizontal) ----------
 (function(){
-  const serie=todos.filter(x=>!(x.ano===2022&&x.mn===6)); // exclui o terreno (outlier 126k)
-  const step=46, H=176, pt=24, pb=22, rendBand=14, padL=18, padR=18;
+  const serie=todos; // projeto inteiro (terreno incluído, clampado no topo)
+  const step=64, H=178, pt=28, pb=22, rendBand=14, padL=20, padR=20;
   const W=padL+padR+(serie.length-1)*step;
   const lineTop=pt, lineBot=H-pb-rendBand-12;
   const R=serie.map(rec), D=serie.map(desp), RD=serie.map(x=>x.rd);
-  const vmax=Math.max(...R,...D)*1.16, rdmax=Math.max(...RD,1);
-  const x=i=>padL+i*step, yv=v=>lineTop+(1-v/vmax)*(lineBot-lineTop);
+  const vmax=Math.max(...R.concat(D).filter(v=>v<50000))*1.16, rdmax=Math.max(...RD,1);
+  const x=i=>padL+i*step, yv=v=>lineTop+(1-Math.min(v,vmax)/vmax)*(lineBot-lineTop);
   const kf=v=> v>=1000 ? (v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1}).replace(/,0$/,'')+'k' : fmt0(v);
   function smooth(p){let d=`M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
     for(let i=0;i<p.length-1;i++){const x1=p[i][0],y1=p[i][1],x2=p[i+1][0],y2=p[i+1][1],xm=(x1+x2)/2;
@@ -241,6 +241,7 @@ todos.sort((a,b)=>a.ano-b.ano||a.mn-b.mn);
       <table><thead><tr><th>Mês</th><th>Aportes</th><th>Despesas</th><th>Rend.</th><th>Saldo</th></tr></thead><tbody>${rows}</tbody></table>
     </details>`;
   });
+  tg(0); // último mês (o mais recente) já vem expandido
 })();
 function tg(i){const r=document.getElementById('r'+i),d=document.getElementById('d'+i);const op=!d.hidden;d.hidden=op;r.classList.toggle('open',!op);}
 
