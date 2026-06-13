@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Casa da Mata — Prestação de Contas</title>
 <style>
-  :root{--verde:#2e6b4f;--verde2:#3f8b66;--verde3:#6db38a;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#b0413e;--laranja:#c8881f;}
+  :root{--verde:#2e6b4f;--verde2:#3f8b66;--terra:#8a6d3b;--bg:#f5f3ee;--card:#fff;--linha:#e6e2d8;--txt:#2a2a28;--mut:#7a766c;--vermelho:#b0413e;--laranja:#c8881f;}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;padding:16px;max-width:880px;margin:0 auto}
   header{text-align:center;padding:18px 0 8px}
@@ -23,12 +23,15 @@
   .card .d{font-size:.74rem;color:var(--mut);margin-top:2px}
   .card.rend .v{color:var(--verde2)}
   h2{font-size:1.05rem;color:var(--verde);margin:24px 0 8px;border-bottom:2px solid var(--linha);padding-bottom:4px}
-  .chartbox{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px 12px 8px}
+  .chartbox{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px 12px 8px;position:relative}
   .chartbox .ct{font-size:.8rem;color:var(--mut);margin-bottom:6px}
   svg{width:100%;height:auto;display:block;overflow:visible}
-  .legend{display:flex;gap:14px;justify-content:center;font-size:.72rem;color:var(--mut);margin-top:6px}
+  .hit{cursor:pointer}
+  .tip{position:absolute;background:#262523;color:#fff;font-size:.72rem;padding:8px 10px;border-radius:8px;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:9;line-height:1.5;min-width:124px}
+  .tip b{color:#fff;font-size:.78rem}
+  .tip .g{color:#8fd3ad} .tip .r{color:#eaa6a3} .tip .y{color:#e7c878}
+  .legend{display:flex;gap:14px;justify-content:center;font-size:.72rem;color:var(--mut);margin-top:8px}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
-  /* tabela expansível */
   table{width:100%;border-collapse:collapse;font-size:.82rem;background:var(--card);border-radius:10px;overflow:hidden}
   th,td{padding:8px 7px;text-align:right;border-bottom:1px solid var(--linha)}
   th:first-child,td:first-child{text-align:left}
@@ -41,11 +44,14 @@
   .pos{color:var(--verde2)} .neg{color:var(--vermelho)}
   tr.det>td{background:#fbfaf6;padding:0}
   .detinner{padding:10px 14px 14px}
-  .detinner .sub{font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 4px}
-  .comp{display:flex;gap:8px;margin:2px 0 8px}
+  .comp{display:flex;gap:8px;margin:2px 0 10px}
   .comp .b{flex:1;background:#eef0ea;border-radius:8px;padding:7px 9px;font-size:.78rem}
   .comp .b b{display:block;font-size:.95rem;color:var(--verde)}
-  .ln{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:.83rem;border-bottom:1px solid #f1efe8}
+  /* títulos de seção do detalhe — em DESTAQUE */
+  .sechead{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 4px;padding-bottom:3px;border-bottom:2px solid var(--linha)}
+  .sechead .tt{font-size:.86rem;font-weight:700;color:var(--verde)}
+  .sechead .vv{font-size:.86rem;font-weight:700}
+  .ln{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:.82rem;color:var(--txt);border-bottom:1px solid #f1efe8}
   .ln:last-child{border-bottom:none}
   .obsmin{font-size:.72rem;color:var(--mut);font-style:italic}
   .st{font-size:.68rem;padding:1px 6px;border-radius:8px;margin-left:5px}
@@ -79,12 +85,11 @@
   <div class="card"><div class="t">Aporte/família</div><div class="v">R$ 2.000</div><div class="d">foi R$ 3.000 jan-fev</div></div>
 </div>
 
-<h2>📈 Fluxo de caixa — saldo mês a mês</h2>
-<div class="chartbox"><div class="ct">Evolução do caixa total (conta + fundo)</div><div id="g-saldo"></div></div>
-
-<h2>💸 Aportes recebidos × despesas pagas</h2>
-<div class="chartbox"><div id="g-fluxo"></div>
-  <div class="legend"><span><i style="background:#3f8b66"></i>Aportes</span><span><i style="background:#b0413e"></i>Despesas</span></div>
+<h2>📈 Evolução do caixa</h2>
+<div class="chartbox">
+  <div class="ct">Saldo mês a mês · barras = despesas do mês · <b>passe o mouse / toque nos pontos</b></div>
+  <div id="g-evo"></div>
+  <div class="legend"><span><i style="background:#2e6b4f"></i>Saldo (linha)</span><span><i style="background:#b0413e;opacity:.6"></i>Despesas (barras)</span></div>
 </div>
 
 <h2>📅 Tabela mês a mês <span style="font-size:.7rem;color:var(--mut);font-weight:400">(toque na linha p/ detalhar)</span></h2>
@@ -135,40 +140,47 @@ const dados = [
 const totAp = x => x.aportes.reduce((s,a)=>s+a.v,0);
 const totDs = x => x.despesas.reduce((s,a)=>s+a.v,0);
 
-// ---- Gráfico 1: linha do saldo ----
+// ---- Gráfico único: evolução (saldo) + despesas (barras) + tooltip ----
 (function(){
-  const W=320,H=140,pl=8,pr=8,pt=22,pb=20;
-  const v=dados.map(d=>d.saldo), mn=Math.min(...v)-1500, mx=Math.max(...v)+1500;
+  const box=document.getElementById('g-evo');
+  const W=320,H=190,pl=12,pr=12,pt=22,pb=22,baseH=46;
+  const lineTop=pt, lineBot=H-pb-baseH-10;
+  const sld=dados.map(d=>d.saldo), smn=Math.min(...sld)-1500, smx=Math.max(...sld)+1500;
+  const dmx=Math.max(...dados.map(totDs));
   const x=i=>pl+i*((W-pl-pr)/(dados.length-1));
-  const y=val=>pt+(1-(val-mn)/(mx-mn))*(H-pt-pb);
-  let pts=dados.map((d,i)=>`${x(i)},${y(d.saldo)}`).join(' ');
-  let area=`M ${x(0)},${H-pb} L `+dados.map((d,i)=>`${x(i)},${y(d.saldo)}`).join(' L ')+` L ${x(dados.length-1)},${H-pb} Z`;
-  let dots=dados.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.saldo)}" r="3" fill="#2e6b4f"/>
-    <text x="${x(i)}" y="${y(d.saldo)-7}" font-size="7.5" fill="#2e6b4f" text-anchor="middle">${fmt0(d.saldo/1000)}k</text>
-    <text x="${x(i)}" y="${H-7}" font-size="8" fill="#7a766c" text-anchor="middle">${d.m}</text>`).join('');
-  document.getElementById('g-saldo').innerHTML=`<svg viewBox="0 0 ${W} ${H}">
-    <defs><linearGradient id="gv" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3f8b66" stop-opacity=".28"/><stop offset="1" stop-color="#3f8b66" stop-opacity="0"/></linearGradient></defs>
-    <path d="${area}" fill="url(#gv)"/><polyline points="${pts}" fill="none" stroke="#2e6b4f" stroke-width="2"/>${dots}</svg>`;
-})();
-
-// ---- Gráfico 2: barras divergentes aportes x despesas ----
-(function(){
-  const W=320,H=170,pb=18,pt=16,gap=6;
-  const n=dados.length, bw=(W-(n+1)*gap)/(n*2);
-  const aps=dados.map(totAp), dss=dados.map(totDs);
-  const mx=Math.max(...aps,...dss,1);
-  const y0=pt+(H-pt-pb)*0.5, half=(H-pt-pb)*0.5;
-  let bars='';
-  dados.forEach((d,i)=>{
-    const gx=gap+i*(2*bw+gap);
-    const ha=aps[i]/mx*half, hd=dss[i]/mx*half;
-    bars+=`<rect x="${gx}" y="${y0-ha}" width="${bw}" height="${ha}" rx="1.5" fill="#3f8b66"/>
-      <rect x="${gx+bw}" y="${y0}" width="${bw}" height="${hd}" rx="1.5" fill="#b0413e"/>
-      <text x="${gx+bw}" y="${y0-ha-3}" font-size="6.5" fill="#3f8b66" text-anchor="middle">${aps[i]?fmt0(aps[i]/1000)+'k':''}</text>
-      <text x="${gx+bw}" y="${y0+hd+8}" font-size="6.5" fill="#b0413e" text-anchor="middle">${dss[i]>=1000?fmt0(dss[i]/1000)+'k':fmt0(dss[i])}</text>
-      <text x="${gx+bw}" y="${H-4}" font-size="8" fill="#7a766c" text-anchor="middle">${d.m}</text>`;
+  const ys=v=>lineTop+(1-(v-smn)/(smx-smn))*(lineBot-lineTop);
+  let bars=dados.map((d,i)=>{const h=(totDs(d)/dmx)*baseH,bw=15;return `<rect x="${x(i)-bw/2}" y="${(H-pb)-h}" width="${bw}" height="${h}" rx="2" fill="#b0413e" opacity=".5"/>
+    <text x="${x(i)}" y="${(H-pb)-h-3}" font-size="6.5" fill="#b0413e" text-anchor="middle">${totDs(d)>=1000?fmt0(totDs(d)/1000)+'k':fmt0(totDs(d))}</text>`}).join('');
+  const area=`M ${x(0)},${lineBot} `+dados.map((d,i)=>`L ${x(i)},${ys(d.saldo)}`).join(' ')+` L ${x(dados.length-1)},${lineBot} Z`;
+  const line=dados.map((d,i)=>`${x(i)},${ys(d.saldo)}`).join(' ');
+  let dots=dados.map((d,i)=>`<circle cx="${x(i)}" cy="${ys(d.saldo)}" r="3.5" fill="#2e6b4f" stroke="#fff" stroke-width="1.2"/>
+    <text x="${x(i)}" y="${ys(d.saldo)-7}" font-size="7.5" fill="#2e6b4f" text-anchor="middle" font-weight="700">${fmt0(d.saldo/1000)}k</text>`).join('');
+  let labels=dados.map((d,i)=>`<text x="${x(i)}" y="${H-5}" font-size="8.5" fill="#7a766c" text-anchor="middle">${d.m}${d.atual?' •':''}</text>`).join('');
+  const colW=(W-pl-pr)/dados.length;
+  let hits=dados.map((d,i)=>`<rect class="hit" x="${x(i)-colW/2}" y="0" width="${colW}" height="${H}" fill="transparent" data-i="${i}"/>`).join('');
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}">
+    <defs><linearGradient id="gv" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3f8b66" stop-opacity=".25"/><stop offset="1" stop-color="#3f8b66" stop-opacity="0"/></linearGradient></defs>
+    ${bars}<path d="${area}" fill="url(#gv)"/><polyline points="${line}" fill="none" stroke="#2e6b4f" stroke-width="2"/>${dots}${labels}${hits}
+  </svg><div class="tip" id="tip" hidden></div>`;
+  const tip=document.getElementById('tip');
+  function show(i){const d=dados[i];
+    const ap=d.aportes.some(a=>a.st==='pend')?` <span class="y">(falta ${d.aportes.filter(a=>a.st==='pend').map(a=>a.f).join(', ')})</span>`:'';
+    tip.innerHTML=`<b>${d.mes}${d.atual?' · em curso':''}</b><br>
+      Saldo: <b>R$ ${fmt(d.saldo)}</b><br>
+      <span class="g">▲ Aportes: R$ ${fmt0(totAp(d))}</span>${ap}<br>
+      <span class="r">▼ Despesas: R$ ${fmt(totDs(d))}</span><br>
+      <span class="y">✦ Rendimento: +R$ ${fmt(d.rd)}</span>`;
+    tip.hidden=false;
+    const rect=box.getBoundingClientRect(), px=(x(i)/W)*rect.width;
+    tip.style.left=Math.min(Math.max(px-62,2),rect.width-132)+'px';
+    tip.style.top='4px';
+  }
+  box.querySelectorAll('.hit').forEach(r=>{
+    const i=+r.dataset.i;
+    r.addEventListener('mouseenter',()=>show(i));
+    r.addEventListener('click',()=>show(i));
+    r.addEventListener('mouseleave',()=>tip.hidden=true);
   });
-  document.getElementById('g-fluxo').innerHTML=`<svg viewBox="0 0 ${W} ${H}"><line x1="0" y1="${y0}" x2="${W}" y2="${y0}" stroke="#e6e2d8"/>${bars}</svg>`;
 })();
 
 // ---- Tabela expansível ----
@@ -184,13 +196,13 @@ dados.forEach((x,i)=>{
       <td class="pos">+${fmt0(x.rd)}</td><td class="sld">${x.atual?'em curso':fmt0(x.saldo)}</td></tr>
     <tr class="det" id="d${i}" hidden><td colspan="5"><div class="detinner">
       <div class="comp"><div class="b">Em conta<b>R$ ${fmt(x.conta)}</b></div><div class="b">No fundo<b>R$ ${fmt(x.fundo)}</b></div></div>
-      <div class="sub">Aportes (meta R$ ${fmt0(x.alvo)}/família)</div>${ah}
-      <div class="sub">Despesas</div>${dh}
+      <div class="sechead"><span class="tt">▲ Aportes</span><span class="vv pos">R$ ${fmt(ap)}</span></div>${ah}
+      <div class="sechead"><span class="tt">▼ Despesas</span><span class="vv neg">R$ ${fmt(ds)}</span></div>${dh}
+      <div class="sechead"><span class="tt">✦ Rendimento do mês</span><span class="vv pos">+R$ ${fmt(x.rd)}</span></div>
     </div></td></tr>`;
 });
 function tg(i){const r=document.getElementById('r'+i),d=document.getElementById('d'+i);
   const op=!d.hidden; d.hidden=op; r.classList.toggle('open',!op);}
-// abre o mês atual
 tg(dados.length-1);
 
 // ---- categorias ----
