@@ -72,6 +72,15 @@
   .cat .nm{flex:0 0 104px;font-size:.82rem}
   .cat .vl{font-size:.8rem;color:var(--mut);white-space:nowrap}
   footer{text-align:center;color:var(--mut);font-size:.74rem;margin:24px 0 8px}
+  .venda{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px;margin-top:10px}
+  .venda p{font-size:.85rem;margin:0 0 10px;line-height:1.45}
+  .venda table{width:100%;border-collapse:collapse;font-size:.84rem}
+  .venda th{font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;text-align:right;padding:4px 6px;border-bottom:1px solid var(--linha)}
+  .venda th:first-child,.venda td:first-child{text-align:left}
+  .venda td{text-align:right;padding:7px 6px;border-bottom:1px solid var(--linha)}
+  .venda td.recebe{font-weight:650;color:var(--verde)}
+  .venda tfoot td{font-weight:650;border-bottom:0}
+  .venda .obsv{font-size:.74rem;color:var(--mut);margin:10px 0 0;line-height:1.4}
 </style>
 </head>
 <body>
@@ -87,11 +96,13 @@
 </div>
 
 <div class="cards">
-  <div class="card"><div class="t">Em conta (Caixa)</div><div class="v">R$ __CAIXA_CONTA__</div><div class="d">após aportes de junho</div></div>
+  <div class="card"><div class="t">Em conta (Caixa)</div><div class="v">R$ __CAIXA_CONTA__</div><div class="d">saldo do projeto</div></div>
   <div class="card"><div class="t">Investido (fundo)</div><div class="v">R$ __CAIXA_FUNDO__</div><div class="d">renda fixa</div></div>
   <div class="card rend"><div class="t">Rendimentos</div><div class="v">+ R$ __CAIXA_REND__</div><div class="d">desde jan/26</div></div>
-  <div class="card"><div class="t">Aporte/família</div><div class="v">R$ 2.000</div><div class="d">foi R$ 3.000 jan-fev/26</div></div>
+  <div class="card"><div class="t">Aporte/família</div><div class="v">Encerrado</div><div class="d">sem aportes desde nov/26</div></div>
 </div>
+
+__FASE_VENDA__
 
 <h2>📈 Receitas × despesas — projeto inteiro</h2>
 <div class="chartbox">
